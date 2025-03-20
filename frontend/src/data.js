@@ -3,47 +3,33 @@
 const tests = [
   {
     id: 1,
-    title: 'The American Revolution',
+    title: "Вариант 1",
     questions: [
       {
         id: 1,
-        question: 'What year did the American Revolution begin?',
-        options: ['1775', '1781', '1765', '1790'],
-        correctAnswer: '1775',
+        text: "Вопрос 1",
+        correctAnswer: "Ответ 1",
       },
       {
         id: 2,
-        question: 'Who wrote the Declaration of Independence?',
-        options: [
-          'George Washington',
-          'Thomas Jefferson',
-          'Benjamin Franklin',
-          'John Adams',
-        ],
-        correctAnswer: 'Thomas Jefferson',
+        text: "Вопрос 2",
+        correctAnswer: "Ответ 2",
       },
     ],
   },
   {
     id: 2,
-    title: 'World War II',
+    title: "Вариант 2",
     questions: [
       {
         id: 1,
-        question: 'Which event triggered World War II?',
-        options: [
-          'The invasion of Poland',
-          'Attack on Pearl Harbor',
-          'D-Day',
-          'The signing of the Treaty of Versailles',
-        ],
-        correctAnswer: 'The invasion of Poland',
+        text: "Which event triggered World War II?",
+        correctAnswer: "The invasion of Poland",
       },
       {
         id: 2,
-        question: 'What year did World War II end?',
-        options: ['1944', '1945', '1946', '1947'],
-        correctAnswer: '1945',
+        text: "What year did World War II end?",
+        correctAnswer: "1945",
       },
     ],
   },

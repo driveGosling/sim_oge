@@ -1,50 +1,43 @@
-// App.jsx
-
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import tests from './data';
-import QuestionCard from './QuestionCard';
-import './App.css';
+import { useState } from "react";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import tests from "./data";
+import "./App.css";
+import Header from "./components/Header.jsx";
+import Test from "./components/Test.jsx";
 
 const App = () => {
   const [testList] = useState(tests);
 
   return (
-    <Router>
-      <div>
-        <h1>History Tests</h1>
-        <ul>
-          {testList.map((test) => (
-            <li key={test.id}>
-              <Link to={`/test/${test.id}`}>{test.title}</Link>
-            </li>
-          ))}
-        </ul>
+    <BrowserRouter>
+      <Header />
 
-        <Routes>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              <h1>Тренировочные варианты</h1>
+              <ul>
+                {testList.map((test) => (
+                  <li key={test.id}>
+                    <Link to={`/test/${test.id}`}>{test.title}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          }
+        />
+        {testList.map((test) => (
           <Route
-            exact
-            path="/"
-            element={<h2>Select a test from the list above.</h2>}
+            key={test.id}
+            path={`/test/${test.id}`}
+            element={<Test test={test} />}
           />
-
-          {testList.map((test) => (
-            <Route
-              key={test.id}
-              path={`/test/${test.id}`}
-              element={
-                <>
-                  <h2>{test.title}</h2>
-                  {test.questions.map((question) => (
-                    <QuestionCard key={question.id} questionData={question} />
-                  ))}
-                </>
-              }
-            />
-          ))}
-        </Routes>
-      </div>
-    </Router>
+        ))}
+        <Route path="*" element={<div>Page Not Found</div>} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
