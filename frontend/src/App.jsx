@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import tests from "./data";
 import "./App.css";
@@ -6,7 +6,17 @@ import Header from "./components/Header.jsx";
 import Test from "./components/Test.jsx";
 
 const App = () => {
-  const [testList] = useState(tests);
+  const [testList, setTestList] = useState([]);
+
+  useEffect(() => {
+    const fetchTests = async () => {
+      const response = await fetch("http://localhost:5000/api/data");
+      const tests = await response.json();
+      setTestList(tests);
+    };
+
+    fetchTests();
+  }, []);
 
   return (
     <BrowserRouter>

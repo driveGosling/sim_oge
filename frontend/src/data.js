@@ -7,12 +7,12 @@ const tests = [
     questions: [
       {
         id: 1,
-        text: "Вопрос 1",
+        text: "Вопрос 1 Теста 1",
         correctAnswer: "Ответ 1",
       },
       {
         id: 2,
-        text: "Вопрос 2",
+        text: "Вопрос 2 Теста 1",
         correctAnswer: "Ответ 2",
       },
     ],
@@ -23,13 +23,13 @@ const tests = [
     questions: [
       {
         id: 1,
-        text: "Which event triggered World War II?",
-        correctAnswer: "The invasion of Poland",
+        text: "Вопрос 1 Теста 2",
+        correctAnswer: "Ответ 1",
       },
       {
         id: 2,
-        text: "What year did World War II end?",
-        correctAnswer: "1945",
+        text: "Вопрос 2 Теста 2",
+        correctAnswer: "Ответ 2",
       },
     ],
   },
