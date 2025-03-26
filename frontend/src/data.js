@@ -49,25 +49,25 @@ const data = {
     {
       id: 1,
       text: "Вопрос 1 Темы 1",
-      correct_answer: "Ответ 1",
+      correctAnswer: "Ответ 1",
       topic_id: 1
     },
     {
       id: 2,
       text: "Вопрос 2 Темы 1",
-      correct_answer: "Ответ 2",
+      correctAnswer: "Ответ 2",
       topic_id: 1
     },
     {
       id: 3,
       text: "Вопрос 1 Темы 2",
-      correct_answer: "Ответ 1",
+      correctAnswer: "Ответ 1",
       topic_id: 2
     },
     {
       id: 4,
       text: "Вопрос 2 Темы 2",
-      correct_answer: "Ответ 2",
+      correctAnswer: "Ответ 2",
       topic_id: 2
     }
   ]

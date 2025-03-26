@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useVariant } from "./../contexts/VariantContext";
 import "./VariantConstructor.css";
 import fakeData from "./../data";
 
@@ -6,10 +8,8 @@ const VariantConstructor = () => {
   const [topics, setTopics] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [topicQuestionCount, setTopicQuestionCount] = useState({});
-
-  const constructVariant = () => {};
-
-  const variant = constructVariant();
+  const { handleCustomVariant } = useVariant();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -105,11 +105,16 @@ const VariantConstructor = () => {
       }
     }
 
-    const variant = {
-      id: Date.now(),
-      name: `Вариант ${new Date().toLocaleTimeString()}`,
-      questions: selectedQuestions,
-    };
+    if (selectedQuestions.length > 0) {
+      const variant = {
+        id: Date.now(),
+        name: `Вариант ${new Date().toLocaleTimeString()}`,
+        questions: selectedQuestions,
+      };
+
+      handleCustomVariant(variant);
+      navigate("/test/custom");
+    }
   };
 
   return (

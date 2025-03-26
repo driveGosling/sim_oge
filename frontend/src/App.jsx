@@ -5,10 +5,29 @@ import "./App.css";
 import Header from "./components/Header.jsx";
 import Test from "./components/Test.jsx";
 import Main from "./components/Main.jsx";
+import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
+
+const AppRoutes = ({ variantsList }) => {
+  const { customVariant } = useVariant();
+
+  return (
+    <Routes>
+      <Route path="/" element={<Main variantsList={variantsList} />} />
+      {variantsList.map((v) => (
+        <Route
+          key={v.id}
+          path={`/test/${v.id}`}
+          element={<Test variant={v} />}
+        />
+      ))}
+      <Route path={"/test/custom"} element={<Test variant={customVariant} />} />
+      <Route path="*" element={<div>Page Not Found</div>} />
+    </Routes>
+  );
+};
 
 const App = () => {
   const [variantsList, setVariantsList] = useState([]);
-  const [customVariant, setCustomVariant] = useState();
 
   useEffect(() => {
     const fetchVariants = async () => {
@@ -29,22 +48,13 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Header />
-        <Routes>
-          <Route path="/" element={<Main variantsList={variantsList} />} />
-          {variantsList.map((v) => (
-            <Route
-              key={v.id}
-              path={`/test/${v.id}`}
-              element={<Test variant={v} />}
-            />
-          ))}
-          <Route path={'/test/custom'} element={<Test variant={customVariant} />} />
-          <Route path="*" element={<div>Page Not Found</div>} />
-        </Routes>
-      <footer>Footer</footer>
-    </BrowserRouter>
+    <VariantProvider>
+      <BrowserRouter>
+        <Header />
+        <AppRoutes variantsList={variantsList} />
+        <footer>Footer</footer>
+      </BrowserRouter>
+    </VariantProvider>
   );
 };
 
