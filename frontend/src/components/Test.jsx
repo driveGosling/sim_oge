@@ -16,8 +16,9 @@ const secondsToHMS = (sec) => {
   );
 };
 
-const Test = ({ test }) => {
-  const { title, questions } = test;
+const Test = ({ variant }) => {
+  const { name, questions } = variant;
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [answers, setAnswers] = useState({});
   const [secondsLeft, setSecondsLeft] = useState(10); // 10800
@@ -48,7 +49,7 @@ const Test = ({ test }) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <h2>{title}</h2>
+        <h2>{name}</h2>
         {!isSubmitted ? <p>Осталось: {timeLeft}</p> : ""}
         {questions.map((question) => (
           <Question
