@@ -1,52 +1,77 @@
 // data.js
 
-const tests = [
-  {
-    id: 1,
-    title: 'The American Revolution',
-    questions: [
-      {
-        id: 1,
-        question: 'What year did the American Revolution begin?',
-        options: ['1775', '1781', '1765', '1790'],
-        correctAnswer: '1775',
-      },
-      {
-        id: 2,
-        question: 'Who wrote the Declaration of Independence?',
-        options: [
-          'George Washington',
-          'Thomas Jefferson',
-          'Benjamin Franklin',
-          'John Adams',
-        ],
-        correctAnswer: 'Thomas Jefferson',
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: 'World War II',
-    questions: [
-      {
-        id: 1,
-        question: 'Which event triggered World War II?',
-        options: [
-          'The invasion of Poland',
-          'Attack on Pearl Harbor',
-          'D-Day',
-          'The signing of the Treaty of Versailles',
-        ],
-        correctAnswer: 'The invasion of Poland',
-      },
-      {
-        id: 2,
-        question: 'What year did World War II end?',
-        options: ['1944', '1945', '1946', '1947'],
-        correctAnswer: '1945',
-      },
-    ],
-  },
-];
+const data = {
+  variants: [
+    {
+      id: 1,
+      name: "Вариант 1",
+      questions: [
+        {
+          id: 1,
+          text: "Вопрос 1 Варианта 1",
+          correctAnswer: "Ответ 1",
+        },
+        {
+          id: 2,
+          text: "Вопрос 2 Варианта 1",
+          correctAnswer: "Ответ 2",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Вариант 2",
+      questions: [
+        {
+          id: 1,
+          text: "Вопрос 1 Варианта 2",
+          correctAnswer: "Ответ 1",
+        },
+        {
+          id: 2,
+          text: "Вопрос 2 Варианта 2",
+          correctAnswer: "Ответ 2",
+        },
+      ],
+    },
+  ],
+  topics: [
+    {
+      id: 1,
+      name: "Тема 1",
+    },
+    {
+      id: 2,
+      name: "Тема 2",
+    },
+  ],
+  questions: [
+    {
+      id: 1,
+      text: "Вопрос 1 Темы 1",
+      correctAnswer: "Ответ 1",
+      topic_id: 1
+    },
+    {
+      id: 2,
+      text: "Вопрос 2 Темы 1",
+      correctAnswer: "Ответ 2",
+      topic_id: 1
+    },
+    {
+      id: 3,
+      text: "Вопрос 1 Темы 2",
+      correctAnswer: "Ответ 1",
+      topic_id: 2
+    },
+    {
+      id: 4,
+      text: "Вопрос 2 Темы 2",
+      correctAnswer: "Ответ 2",
+      topic_id: 2
+    }
+  ]
+};
 
-export default tests;
+export default data;
+

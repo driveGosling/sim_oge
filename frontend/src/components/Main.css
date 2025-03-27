@@ -1,0 +1,39 @@
+.main {
+  padding-top: 20px;
+}
+
+/* .constructor {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.constructor-topicList {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.constructor-buttons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.submit {
+  padding: 10px 20px;
+  background-color: #77a1d3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit:hover {
+  background-color: #638dc0;
+} */
+
+
+/* Класс для основной конструкции */

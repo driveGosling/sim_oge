@@ -1,50 +1,60 @@
-// App.jsx
+import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import fakeData from "./data";
+import "./App.css";
+import Header from "./components/Header.jsx";
+import Test from "./components/Test.jsx";
+import Main from "./components/Main.jsx";
+import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
 
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import tests from './data';
-import QuestionCard from './QuestionCard';
-import './App.css';
-
-const App = () => {
-  const [testList] = useState(tests);
+const AppRoutes = ({ variantsList }) => {
+  const { customVariant } = useVariant();
 
   return (
-    <Router>
-      <div>
-        <h1>History Tests</h1>
-        <ul>
-          {testList.map((test) => (
-            <li key={test.id}>
-              <Link to={`/test/${test.id}`}>{test.title}</Link>
-            </li>
-          ))}
-        </ul>
+    <Routes>
+      <Route path="/" element={<Main variantsList={variantsList} />} />
+      {variantsList.map((v) => (
+        <Route
+          key={v.id}
+          path={`/test/${v.id}`}
+          element={<Test variant={v} />}
+        />
+      ))}
+      <Route path={"/test/custom"} element={<Test variant={customVariant} />} />
+      <Route path="*" element={<div>Page Not Found</div>} />
+    </Routes>
+  );
+};
 
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={<h2>Select a test from the list above.</h2>}
-          />
+const App = () => {
+  const [variantsList, setVariantsList] = useState([]);
 
-          {testList.map((test) => (
-            <Route
-              key={test.id}
-              path={`/test/${test.id}`}
-              element={
-                <>
-                  <h2>{test.title}</h2>
-                  {test.questions.map((question) => (
-                    <QuestionCard key={question.id} questionData={question} />
-                  ))}
-                </>
-              }
-            />
-          ))}
-        </Routes>
-      </div>
-    </Router>
+  useEffect(() => {
+    const fetchVariants = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/data");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const variants = await response.json();
+        setVariantsList(variants);
+      } catch (e) {
+        console.log("Error fetching tests:", e);
+        setVariantsList(fakeData.variants);
+      }
+    };
+
+    fetchVariants();
+  }, []);
+
+  return (
+    <VariantProvider>
+      <BrowserRouter>
+        <Header />
+        <AppRoutes variantsList={variantsList} />
+        <footer>Footer</footer>
+      </BrowserRouter>
+    </VariantProvider>
   );
 };
 

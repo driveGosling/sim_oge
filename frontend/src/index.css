@@ -1,15 +1,24 @@
 /* App.css */
+#root {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
 
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  padding: 20px;
 }
 
 h1 {
   text-align: center;
   color: #333;
+}
+
+h2, h3, h4, h5, h6 {
+  margin: 0 0 10px;
+  color: #006;
 }
 
 ul {
@@ -25,19 +34,6 @@ li {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  margin: 0 0 10px;
-  color: #007bff; /* Bootstrap primary color */
-}
-
 p {
   font-size: 16px;
-  color: #555;
-}
-
-.question-card {
-  background: #e9ecef;
-  margin: 15px 0;
-  padding: 10px;
-  border-radius: 5px;
 }
