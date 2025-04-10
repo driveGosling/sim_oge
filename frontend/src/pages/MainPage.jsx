@@ -1,4 +1,4 @@
-import "./Main.css";
+import "./MainPage.css";
 import { Link } from "react-router-dom";
 import VariantConstructor from "./VariantConstructor";
 
