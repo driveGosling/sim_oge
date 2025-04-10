@@ -1,7 +1,10 @@
+
+
 .header {
   display: flex;
   align-items: center;
   color: white;
+  font-family: "PT Sans", Roboto, "Segoe UI", sans-serif;
 }
 
 .logo {

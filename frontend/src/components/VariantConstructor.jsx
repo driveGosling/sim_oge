@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useVariant } from "./../contexts/VariantContext";
 import "./VariantConstructor.css";
-import fakeData from "./../data";
+import fakeData from "./../data/data.js";
 
 const VariantConstructor = () => {
   const [topics, setTopics] = useState([]);

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import fakeData from "./data";
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import fakeData from "./data/data.js";
 import Header from "./components/Header.jsx";
-import Test from "./components/Test.jsx";
-import Main from "./components/Main.jsx";
+import Test from "./pages/TestPage.jsx";
+import Main from "./pages/MainPage.jsx";
 import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
 
 const AppRoutes = ({ variantsList }) => {

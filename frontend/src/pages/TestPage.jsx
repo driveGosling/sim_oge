@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Question from "./Question";
+import Question from "../components/Question";
 import { Link } from "react-router-dom";
 
 const secondsToHMS = (sec) => {

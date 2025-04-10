@@ -1,6 +1,6 @@
 import "./MainPage.css";
 import { Link } from "react-router-dom";
-import VariantConstructor from "./VariantConstructor";
+import VariantConstructor from "../components/VariantConstructor"
 
 const Main = ({ variantsList }) => {
   return (
