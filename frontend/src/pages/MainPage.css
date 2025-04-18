@@ -1,39 +1,221 @@
 .main {
-  padding-top: 20px;
+  padding-top: 30px;
 }
 
-/* .constructor {
+/* Заголовки */
+.section h2 {
+  color: #333333;
+  margin-bottom: 1rem;
+}
+
+/* Секция тренировок */
+.section-tren {
+  margin-bottom: 4rem;
+}
+
+/* Список вариантов с «угловой» рамкой */
+.section-tren .variants-list {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+  position: relative; /* нужен для абсолютного позиционирования уголков */
 }
 
-.constructor-topicList {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+/* Верхние уголки */
+.section-tren .variants-list::before,
+.section-tren .variants-list::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fd7811;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+.section-tren .variants-list::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.section-tren .variants-list::after {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* Нижние уголки (спаны внутри ul) */
+.section-tren .variants-list .corner-bl,
+.section-tren .variants-list .corner-br {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fd7811;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+.section-tren .variants-list .corner-bl {
+  bottom: 0;
+  left: 0;
+  border-top: none;
+  border-right: none;
+}
+
+.section-tren .variants-list .corner-br {
+  bottom: 0;
+  right: 0;
+  border-top: none;
+  border-left: none;
+}
+
+/* Карточки вариантов */
+.li-test {
+  background: transparent;
+  border: 1px solid #fd7811;
   padding: 10px;
-  background-color: #f9f9f9;
+  border-radius: 20px;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
 }
 
-.constructor-buttons {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+.li-test:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.submit {
-  padding: 10px 20px;
-  background-color: #77a1d3;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.li-test a {
+  text-decoration: none;
+  color: #333333;
+  font-weight: 500;
+  display: block;
 }
 
-.submit:hover {
-  background-color: #638dc0;
-} */
+/* Секция конструктора */
+.section-construct {
+  position: relative; /* для уголков */
+  color: #333333;
+}
 
+/* Верхние уголки для описания */
+.section-construct::before,
+.section-construct::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fd7811;
+  border-radius: 3px;
+  z-index: 2;
+}
 
-/* Класс для основной конструкции */
+.section-construct::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.section-construct::after {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* Нижние уголки (спаны внутри секции) */
+.section-construct .corner-bl,
+.section-construct .corner-br {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fd7811;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+.section-construct .corner-bl {
+  bottom: 0;
+  left: 0;
+  border-top: none;
+  border-right: none;
+}
+
+.section-construct .corner-br {
+  bottom: 0;
+  right: 0;
+  border-top: none;
+  border-left: none;
+}
+
+.descr-wrapper {
+  position: relative;
+  padding: 1rem;
+  margin: 1.5rem 0;       /* отступ снизу перед конструктором */
+}
+
+/* Верхние уголки рамки */
+.descr-wrapper::before,
+.descr-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fd7811;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+.descr-wrapper::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.descr-wrapper::after {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* Нижние уголки (спаны внутри) */
+.descr-wrapper .corner-bl,
+.descr-wrapper .corner-br {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fd7811;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+.descr-wrapper .corner-bl {
+  bottom: 0;
+  left: 0;
+  border-top: none;
+  border-right: none;
+}
+
+.descr-wrapper .corner-br {
+  bottom: 0;
+  right: 0;
+  border-top: none;
+  border-left: none;
+}
+
+/* Стили текста внутри рамки */
+.descr {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 200;
+  color: #333333;
+  line-height: 1.6;
+  text-align: left;
+}
