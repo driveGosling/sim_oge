@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useVariant } from "./../contexts/VariantContext";
+import { useVariant } from "../contexts/VariantContext";
 import "./VariantConstructor.css";
-import fakeData from "./../data/data.js";
+import fakeData from "../data/data.js";
 
 const VariantConstructor = () => {
   const [topics, setTopics] = useState([]);
@@ -14,43 +14,37 @@ const VariantConstructor = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const dedupe = (arr) => {
+      const map = new Map(arr.map((t) => [t.name, t]));
+      return Array.from(map.values());
+    };
+    const extraTopics = Array.from({ length: 15 }, (_, idx) => ({
+      id: `extra-${idx + 1}`,
+      name: `Дополнительная тема ${idx + 1}`,
+    }));
+
     const fetchTopics = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/topics");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const topics = await response.json();
-        const initialCounts = {};
-        topics.forEach((topic) => {
-          initialCounts[topic.id] = 0;
-        });
-
-        setTopics(topics);
-        setTopicQuestionCount(initialCounts);
-      } catch (e) {
-        console.log("Error fetching topics:", e);
-        const initialCounts = {};
-        fakeData.topics.forEach((topic) => {
-          initialCounts[topic.id] = 0;
-        });
-
-        setTopicQuestionCount(initialCounts);
-        setTopics(fakeData.topics);
+        const resp = await fetch("http://localhost:5000/api/topics");
+        if (!resp.ok) throw new Error();
+        const apiTopics = await resp.json();
+        const all = dedupe([...apiTopics, ...extraTopics]);
+        setTopics(all);
+        setTopicQuestionCount(Object.fromEntries(all.map(t => [t.id, 0])));
+      } catch {
+        const base = fakeData.topics;
+        const all = dedupe([...base, ...extraTopics]);
+        setTopics(all);
+        setTopicQuestionCount(Object.fromEntries(all.map(t => [t.id, 0])));
       }
     };
 
     const fetchQuestions = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/questions");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const questions = await response.json();
-
-        setQuestions(questions);
-      } catch (e) {
-        console.log("Error fetching topics:", e);
+        const resp = await fetch("http://localhost:5000/api/questions");
+        if (!resp.ok) throw new Error();
+        setQuestions(await resp.json());
+      } catch {
         setQuestions(fakeData.questions);
       }
     };
@@ -59,62 +53,27 @@ const VariantConstructor = () => {
     fetchQuestions();
   }, []);
 
-  const handleChange = (topicId, e) => {
-    const value = Math.max(0, Number(e.target.value));
-    if (!isNaN(value)) {
-      setTopicQuestionCount((prev) => ({
-        ...prev,
-        [topicId]: value,
-      }));
-    }
+  const handleChange = (id, e) => {
+    const v = Math.max(0, Number(e.target.value));
+    if (!isNaN(v)) setTopicQuestionCount(p => ({ ...p, [id]: v }));
   };
+  const handleInc = id => setTopicQuestionCount(p => ({ ...p, [id]: (p[id]||0) + 1 }));
+  const handleDec = id => setTopicQuestionCount(p => ({ ...p, [id]: Math.max(0,(p[id]||0)-1) }));
 
-  const handleIncrement = (topicId) => {
-    setTopicQuestionCount((prev) => ({
-      ...prev,
-      [topicId]: (prev[topicId] || 0) + 1,
-    }));
-  };
-
-  const handleDecrement = (topicId) => {
-    setTopicQuestionCount((prev) => ({
-      ...prev,
-      [topicId]: Math.max(0, (prev[topicId] || 0) - 1),
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-
-    const selectedQuestions = [];
-
-    for (const [topicId, count] of Object.entries(topicQuestionCount)) {
-      // Ищем вопросы, соответствующие текущей теме
-      const questionsForTopic = questions.filter(
-        (q) => q.topic_id === Number(topicId)
-      );
-
-      // Перемешиваем вопросы случайным образом
-      const shuffledQuestions = questionsForTopic.sort(
-        () => Math.random() - 0.5
-      );
-
-      // Добавляем максимум count вопросов в массив selectedQuestions
-      const numQuestionsToSelect = Math.min(count, shuffledQuestions.length);
-
-      for (let i = 0; i < numQuestionsToSelect; i++) {
-        selectedQuestions.push(shuffledQuestions[i]);
-      }
-    }
-
-    if (selectedQuestions.length > 0) {
-      const variant = {
+    const sel = [];
+    Object.entries(topicQuestionCount).forEach(([tid, cnt]) => {
+      const qs = questions.filter(q => q.topic_id === Number(tid));
+      const sh = [...qs].sort(() => Math.random()-0.5);
+      sel.push(...sh.slice(0, Math.min(cnt, sh.length)));
+    });
+    if (sel.length) {
+      handleCustomVariant({
         id: Date.now(),
         name: `Вариант ${new Date().toLocaleTimeString()}`,
-        questions: selectedQuestions,
-      };
-
-      handleCustomVariant(variant);
+        questions: sel
+      });
       navigate("/test/custom");
     }
   };
@@ -132,22 +91,14 @@ const VariantConstructor = () => {
               {topics.map(({ id, name }) => (
                 <li className="li-constructor" key={id}>
                   <div className="counter">
-                    <button
-                      onClick={() => handleDecrement(id)}
-                      className="counter-decrease"
-                      type="button"
-                    >−</button>
+                    <button type="button" onClick={() => handleDec(id)}>−</button>
                     <input
                       className="counter-input"
                       type="tel"
-                      value={topicQuestionCount[id] || 0}
-                      onChange={(e) => handleChange(id, e)}
+                      value={topicQuestionCount[id]||0}
+                      onChange={e => handleChange(id, e)}
                     />
-                    <button
-                      onClick={() => handleIncrement(id)}
-                      className="counter-increase"
-                      type="button"
-                    >＋</button>
+                    <button type="button" onClick={() => handleInc(id)}>＋</button>
                   </div>
                   <div className="constructor-topicDescr">{name}</div>
                 </li>
@@ -156,27 +107,31 @@ const VariantConstructor = () => {
           </div>
         </div>
 
+        {/* обёртка только для кнопки + чекбоксов */}
         <div className="constructor-buttons">
-          <button className="submit" type="submit">
-            Составить вариант
-          </button>
-          <div className="answer-options">
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={briefAnswer}
-                onChange={() => setBriefAnswer(!briefAnswer)}
-              />
-              Краткий ответ
-            </label>
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={detailedAnswer}
-                onChange={() => setDetailedAnswer(!detailedAnswer)}
-              />
-              Развернутый ответ
-            </label>
+          <div className="button-frame">
+            <button className="submit" type="submit">Составить вариант</button>
+            <div className="answer-options">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={briefAnswer}
+                  onChange={() => setBriefAnswer(!briefAnswer)}
+                />
+                Краткий ответ
+              </label>
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={detailedAnswer}
+                  onChange={() => setDetailedAnswer(!detailedAnswer)}
+                />
+                Развернутый ответ
+              </label>
+            </div>
+            {/* спаны для нижних уголков */}
+            <span className="corner-bl" />
+            <span className="corner-br" />
           </div>
         </div>
       </div>
