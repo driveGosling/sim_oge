@@ -1,30 +1,65 @@
-
-
 .header {
   display: flex;
-  align-items: center;
-  color: white;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 10em;
+  padding: 0 1rem 0 0;
+  background-color: #ffffff;
   font-family: "PT Sans", Roboto, "Segoe UI", sans-serif;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1rem;
 }
 
 .logo {
-  height: 100px;
-  margin-right: 10px;
+  height: 4em;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+  will-change: transform, filter;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  transform: scale(1.1);
+  filter: brightness(1.3);
 }
 
-.title {
-  font-size: 1.5rem;
+.subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  color: #333333;
+  opacity: 0.8;
+}
+
+.photo-container {
+  position: absolute;
+  top: 0;
+  right: 113px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.books {
+  position: absolute;
+  top: -1em;
+  height: calc(100% + 2em);
+  object-fit: cover;
+  z-index: 0;
+}
+
+.photo {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  left: 113px;
+  object-fit: contain;
+  bottom: -21px;
 }
