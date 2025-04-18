@@ -4,6 +4,7 @@ import fakeData from "./data/data.js";
 import Header from "./components/Header.jsx";
 import Test from "./pages/TestPage.jsx";
 import Main from "./pages/MainPage.jsx";
+import Footer from "./components/Footer.jsx";
 import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
 
 const AppRoutes = ({ variantsList }) => {
@@ -51,7 +52,7 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <AppRoutes variantsList={variantsList} />
-        <footer>Footer</footer>
+        <Footer />
       </BrowserRouter>
     </VariantProvider>
   );
