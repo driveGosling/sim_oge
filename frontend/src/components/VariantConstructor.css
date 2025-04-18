@@ -1,103 +1,137 @@
+
 .constructor {
-  display: flex; /* Добавлено для горизонтального расположения колонок */
+  display: flex;
   align-items: flex-start;
+  background-color: #ffffff;
+  border: 1px solid rgba(253, 120, 17, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Стили для списка тем */
+
 .constructor-topicList {
   flex: 2;
-  max-width: 70%; /* Установите максимальную ширину для ограничения */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 15px;
-  background-color: #f9f9f9;
+  max-width: 70%;
+  padding-right: 1.5rem;
 }
+
 
 .constructor-head {
   display: flex;
   justify-content: space-between;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
+  border-bottom: 2px solid #fd7811;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
-
 .constructor-head h3 {
   margin: 0;
-  font-weight: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fd7811;
 }
 
-/* Стили для тела списка */
+
 .constructor-body {
-  margin-top: 10px;
+  margin-top: 0.5rem;
 }
-
 .constructor-body ul {
-  list-style-type: none;
+  list-style: none;
+  margin: 0;
   padding: 0;
 }
-
 .constructor-body li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 0.75rem 0;
   border-bottom: 1px solid #eee;
 }
 
-/* Стили для счетчика */
+
 .counter {
   display: flex;
   align-items: center;
 }
 
 .counter button {
-  background-color: #007bff;
+  background-color: #fd7811;
   color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
+  border-radius: 15px;
+  padding: 4px 12px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
 }
-
 .counter button:hover {
-  background-color: #0056b3;
+  background-color: #e06e0d;
+}
+.counter-input {
+  width: 3rem;
+  text-align: center;
+  border: 1px solid #fd7811;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 0 0.5rem;
+  padding: 0.25rem;
 }
 
-.counter-input {
-  width: 50px;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  margin: 0 10px;
-}
 
 .constructor-buttons {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 15px;
+  margin-top: 2rem;
 }
 
 .constructor-buttons .submit {
-  background-color: #28a745;
+  background-color: #fd7811;
   color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  border-radius: 20px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 18px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-bottom: 1rem;
+}
+.constructor-buttons .submit:hover {
+  background-color: #e06e0d;
+  transform: translateY(-1px);
 }
 
-.constructor-buttons .submit:hover {
-  background-color: #218838;
+.answer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.checkbox-label {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+.checkbox-label input {
+  margin-right: 0.5rem;
+  width: 1em;
+  height: 1em;
+  accent-color: #fd7811;
 }
 
 .li-constructor {
-  background:#fff;
-  margin: 10px 0;
-  padding: 15px;
-  border-radius:5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  margin: 0 0 0.5rem 0;
+  border-radius: 5px;
+  padding: 0;
+  box-shadow: none;
+}
+
+.constructor-topicDescr {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 300;
 }

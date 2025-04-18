@@ -8,6 +8,8 @@ const VariantConstructor = () => {
   const [topics, setTopics] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [topicQuestionCount, setTopicQuestionCount] = useState({});
+  const [briefAnswer, setBriefAnswer] = useState(false);
+  const [detailedAnswer, setDetailedAnswer] = useState(false);
   const { handleCustomVariant } = useVariant();
   const navigate = useNavigate();
 
@@ -134,9 +136,7 @@ const VariantConstructor = () => {
                       onClick={() => handleDecrement(id)}
                       className="counter-decrease"
                       type="button"
-                    >
-                      -
-                    </button>
+                    >−</button>
                     <input
                       className="counter-input"
                       type="tel"
@@ -147,9 +147,7 @@ const VariantConstructor = () => {
                       onClick={() => handleIncrement(id)}
                       className="counter-increase"
                       type="button"
-                    >
-                      +
-                    </button>
+                    >＋</button>
                   </div>
                   <div className="constructor-topicDescr">{name}</div>
                 </li>
@@ -157,10 +155,29 @@ const VariantConstructor = () => {
             </ul>
           </div>
         </div>
+
         <div className="constructor-buttons">
           <button className="submit" type="submit">
             Составить вариант
           </button>
+          <div className="answer-options">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={briefAnswer}
+                onChange={() => setBriefAnswer(!briefAnswer)}
+              />
+              Краткий ответ
+            </label>
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={detailedAnswer}
+                onChange={() => setDetailedAnswer(!detailedAnswer)}
+              />
+              Развернутый ответ
+            </label>
+          </div>
         </div>
       </div>
     </form>
