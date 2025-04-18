@@ -93,3 +93,11 @@
 .constructor-buttons .submit:hover {
   background-color: #218838;
 }
+
+.li-constructor {
+  background:#fff;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius:5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

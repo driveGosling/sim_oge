@@ -128,7 +128,7 @@ const VariantConstructor = () => {
           <div className="constructor-body">
             <ul>
               {topics.map(({ id, name }) => (
-                <li key={id}>
+                <li className="li-constructor" key={id}>
                   <div className="counter">
                     <button
                       onClick={() => handleDecrement(id)}
