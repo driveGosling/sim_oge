@@ -190,3 +190,22 @@
   font-size: 1rem;
   font-weight: 300;
 }
+
+.brief-label {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: #333;
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+/* разделитель «Развернутый ответ» */
+.li-divider {
+  list-style: none;
+  grid-column: 1 / -1;       /* если у вас грид — растянуть на всю ширину */
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: #333;
+  padding: 0.5rem 0;
+  text-align: left;
+}

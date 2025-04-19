@@ -48,16 +48,17 @@ const Test = ({ variant }) => {
 
   return (
     <>
+    <main>
       <form onSubmit={handleSubmit}>
-        <h2>{name}</h2>
+        <h2 className="name-variant">№ {name}</h2>
         {!isSubmitted ? <p>Осталось: {timeLeft}</p> : ""}
         {questions.map((question) => (
           <Question
-            key={question.id}
-            question={question}
-            isSubmitted={isSubmitted}
-            userAnswer={answers[question.id] || ""}
-            onAnswerChange={handleAnswerChange}
+          key={question.id}
+          question={question}
+          isSubmitted={isSubmitted}
+          userAnswer={answers[question.id] || ""}
+          onAnswerChange={handleAnswerChange}
           />
         ))}
 
@@ -66,6 +67,7 @@ const Test = ({ variant }) => {
         </button>
       </form>
       <Link to="/">Вернуться на главную</Link>
+        </main>
     </>
   );
 };

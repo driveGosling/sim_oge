@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useVariant } from "../contexts/VariantContext";
 import "./VariantConstructor.css";
@@ -86,6 +86,9 @@ const VariantConstructor = () => {
             <h3>Количество</h3>
             <h3>Тема</h3>
           </div>
+
+          <div className="brief-label">Краткий ответ</div>
+
           <div className="constructor-body">
             <ul>
               {topics.map(({ id, name }) => (
@@ -103,11 +106,11 @@ const VariantConstructor = () => {
                   <div className="constructor-topicDescr">{name}</div>
                 </li>
               ))}
+              <div className="li-divider">Развернутый ответ</div>
             </ul>
           </div>
         </div>
 
-        {/* обёртка только для кнопки + чекбоксов */}
         <div className="constructor-buttons">
           <div className="button-frame">
             <button className="submit" type="submit">Составить вариант</button>
@@ -129,7 +132,6 @@ const VariantConstructor = () => {
                 Развернутый ответ
               </label>
             </div>
-            {/* спаны для нижних уголков */}
             <span className="corner-bl" />
             <span className="corner-br" />
           </div>
