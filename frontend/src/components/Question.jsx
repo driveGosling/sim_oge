@@ -14,7 +14,7 @@ const Question = ({ question, isSubmitted, userAnswer, onAnswerChange }) => {
           value={userAnswer}
           onChange={(e) => onAnswerChange(question.id, e.target.value)}
           className={isSubmitted ? (isCorrect ? 'correct' :  'wrong') : ''}
-        />
+          />
       </label>
       {isSubmitted ? (!isCorrect ? (<div>{question.correctAnswer}</div>) : '') : ''}
     </div>

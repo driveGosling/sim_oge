@@ -111,7 +111,6 @@ const VariantConstructor = () => {
           </div>
         </div>
 
-        {/* обёртка только для кнопки + чекбоксов */}
         <div className="constructor-buttons">
           <div className="button-frame">
             <button className="submit" type="submit">Составить вариант</button>
@@ -133,7 +132,6 @@ const VariantConstructor = () => {
                 Развернутый ответ
               </label>
             </div>
-            {/* спаны для нижних уголков */}
             <span className="corner-bl" />
             <span className="corner-br" />
           </div>
