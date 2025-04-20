@@ -1,7 +1,6 @@
 import "./Question.css";
 
 const Question = ({ question, isSubmitted, userAnswer, onAnswerChange }) => {
-  const isCorrect = isSubmitted && userAnswer === question.correctAnswer;
 
   return (
     <div className="question-card">
@@ -9,17 +8,28 @@ const Question = ({ question, isSubmitted, userAnswer, onAnswerChange }) => {
 
       <label>
         {question.answerType === "short" ? (
-          question.answerOptions.map((option) => (
-            <div key={option.id}>
+          question.answerOptions.map(({ id, optionText }) => (
+            <div
+              key={id}
+              className={
+                isSubmitted                                      // Время кончилось
+                  ? optionText === question.correctAnswer        // Опция является правильным ответом и подсвечивается зеленым
+                    ? "correct"
+                    : userAnswer === optionText                  // Пользователь отвечает неправильно, его ответ подсвечивается красным
+                    ? "wrong"
+                    : ""
+                  : ""
+              }
+            >
               <input
                 type="radio"
                 name={question.id}
-                value={option.optionText}
-                checked={userAnswer === option.optionText}
+                value={optionText}
+                checked={userAnswer === optionText}
                 disabled={isSubmitted}
                 onChange={(e) => onAnswerChange(question.id, e.target.value)}
               />
-              {option.optionText}
+              {optionText}
             </div>
           ))
         ) : (
@@ -28,19 +38,17 @@ const Question = ({ question, isSubmitted, userAnswer, onAnswerChange }) => {
               Решения заданий с развернутым ответом не проверяются
               автоматически.
             </p>
-            <input
-              type="text"
+            <textarea
               name={question.id}
               disabled={isSubmitted}
               value={userAnswer}
               onChange={(e) => onAnswerChange(question.id, e.target.value)}
-              className={isSubmitted ? (isCorrect ? "correct" : "wrong") : ""}
-            />
+              rows={15}
+              cols={100}
+            ></textarea>
           </>
         )}
       </label>
-
-      {isSubmitted ? !isCorrect ? <div>{question.correctAnswer}</div> : "" : ""}
     </div>
   );
 };

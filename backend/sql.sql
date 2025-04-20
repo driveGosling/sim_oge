@@ -41,10 +41,10 @@ INSERT INTO Variants (name) VALUES
 ('Вариант 2');
 
 INSERT INTO Questions (text, correct_answer, topic_id, answer_type) VALUES
-('Вопрос 1 Темы 1', 'Ответ 1', 1, 'short'),
-('Вопрос 2 Темы 1', 'Ответ 2', 1, 'long'),
-('Вопрос 1 Темы 2', 'Ответ 1', 2, 'short'),
-('Вопрос 2 Темы 2', 'Ответ 2', 2, 'long');
+('Вопрос 1 Темы 1', 'Правильный ответ на Вопрос 1 Темы 1', 1, 'short'),
+('Вопрос 2 Темы 1', null, 1, 'long'),
+('Вопрос 1 Темы 2', 'Правильный ответ на Вопрос 1 Темы 2', 2, 'short'),
+('Вопрос 2 Темы 2', null, 2, 'long');
 
 INSERT INTO Questions_Variants (variant_id, question_id) VALUES 
 (1, 1),
@@ -53,7 +53,9 @@ INSERT INTO Questions_Variants (variant_id, question_id) VALUES
 (2, 4);
 
 INSERT INTO Answer_Options (question_id, option_text) VALUES 
-(1, 'Answer Option 1 for Question 1'),
-(1, 'Answer Option 2 for Question 1'),
-(3, 'Answer Option 1 for Question 3'),
-(3, 'Answer Option 2 for Question 3');
+(1, 'Правильный ответ на Вопрос 1 Темы 1'),
+(1, 'Неправильный ответ 1 на Вопрос 1 Темы 1'),
+(1, 'Неправильный ответ 2 на Вопрос 1 Темы 1'),
+(1, 'Неправильный ответ 3 на Вопрос 1 Темы 1'),
+(3, 'Правильный ответ на Вопрос 1 Темы 2'),
+(3, 'Неправильный ответ на Вопрос 1 Темы 2');
