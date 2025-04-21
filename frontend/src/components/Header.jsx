@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logoSrc from '../assets/logo.png';
 import peterSrc from '../assets/peter.png';
 import bookSrc from '../assets/book.png';
+import profile from '../assets/OrangeProfile.png';
 
 const Header = () => {
   return (
@@ -13,6 +14,14 @@ const Header = () => {
         </Link>
         <h2 className="subtitle">История россии</h2>
       </div>
+
+      <div className='profile-container'>
+        <Link to="/profile" className="profile-link">
+          <span className="profile-text">Профиль</span>
+          <img src={profile} alt="prf" className='profile-icon' />
+        </Link>
+      </div>
+      
       <div
         className="photo-container"
       >
