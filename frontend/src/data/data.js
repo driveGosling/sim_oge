@@ -55,10 +55,6 @@ const data = {
       text: "Какой-то вопрос относящийся к теме с id 1",
       correctAnswer: "ДА",
       answerType: "short",
-      answerOptions: [
-        { id: 1, optionText: "ДА" },
-        { id: 2, optionText: "НЕТ" },
-      ],
       topicId: 1,
     },
     {
@@ -66,10 +62,6 @@ const data = {
       text: "Еще какой-то вопрос относящийся к теме с id 1",
       correctAnswer: "ну да",
       answerType: "short",
-      answerOptions: [
-        { id: 1, optionText: "Получается так" },
-        { id: 2, optionText: "ну да" },
-      ],
       topicId: 1,
     },
     {
