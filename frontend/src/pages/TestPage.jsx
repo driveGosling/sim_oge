@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import Question from "../components/Question";
 import { Link } from "react-router-dom";
+import Question from "../components/Question";
+import "./TestPage.css";
 
 const secondsToHMS = (sec) => {
   const dateObj = new Date(sec * 1000);
@@ -21,15 +22,24 @@ const Test = ({ variant }) => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [answers, setAnswers] = useState({});
-  const [secondsLeft, setSecondsLeft] = useState(10); // 10800
+  const [secondsLeft, setSecondsLeft] = useState(10800);
   const timeLeft = secondsToHMS(secondsLeft);
 
   const handleAnswerChange = (id, value) => {
-    setAnswers((prevAnswers) => ({ ...prevAnswers, [id]: value }));
+    setAnswers((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleTableChange = (id, idx, value) => {
+    setAnswers((prev) => {
+      const arr = prev[id] || [];
+      const newArr = [...arr];
+      newArr[idx] = value;
+      return { ...prev, [id]: newArr };
+    });
   };
 
   const handleSubmit = (e) => {
-    if (e) e.preventDefault();
+    e?.preventDefault();
     setIsSubmitted(true);
   };
 
@@ -38,37 +48,77 @@ const Test = ({ variant }) => {
       setIsSubmitted(true);
       return;
     }
-
     const timer = setInterval(() => {
-      setSecondsLeft((prevTime) => prevTime - 1);
+      setSecondsLeft((prev) => prev - 1);
     }, 1000);
-
     return () => clearInterval(timer);
   }, [secondsLeft]);
 
   return (
-    <>
     <main>
       <form onSubmit={handleSubmit}>
         <h2 className="name-variant">№ {name}</h2>
-        {!isSubmitted ? <p>Осталось: {timeLeft}</p> : ""}
-        {questions.map((question) => (
-          <Question
-          key={question.id}
-          question={question}
-          isSubmitted={isSubmitted}
-          userAnswer={answers[question.id] || ""}
-          onAnswerChange={handleAnswerChange}
-          />
-        ))}
+        {!isSubmitted && <p>Осталось: {timeLeft}</p>}
 
-        <button type="submit" disabled={isSubmitted}>
+        {questions.map((question, idx) => {
+          if (idx === 0) {
+            return (
+              <div key={question.id} className="question-card">
+                <h3 className="question-header">{question.text}</h3>
+                <div className="answer-row">
+                  <table className="answer-table">
+                    <thead>
+                      <tr>
+                        <th>А</th>
+                        <th>Б</th>
+                        <th>В</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {[0, 1, 2].map((i) => (
+                          <td key={i}>
+                            <input
+                              type="text"
+                              maxLength={1}
+                              className="table-input"
+                              disabled={isSubmitted}
+                              value={answers[question.id]?.[i] || ""}
+                              onChange={(e) => handleTableChange(question.id, i, e.target.value)}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div key={question.id} className="question-card">
+              <h3 className="question-header">{question.text}</h3>
+              <div className="answer-row">
+                <span className="answer-label">Ответ:</span>
+                <input
+                  type="text"
+                  className="answer-input"
+                  value={answers[question.id] || ""}
+                  disabled={isSubmitted}
+                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                />
+              </div>
+            </div>
+          );
+        })}
+
+        <button type="submit" disabled={isSubmitted} className="submit-button">
           Завершить тест
         </button>
       </form>
       <Link to="/">Вернуться на главную</Link>
-        </main>
-    </>
+    </main>
   );
 };
 
