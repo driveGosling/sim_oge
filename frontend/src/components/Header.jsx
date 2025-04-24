@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import logoSrc from '../assets/logo.png';
 import peterSrc from '../assets/peter.png';
 import bookSrc from '../assets/book.png';
 import profile from '../assets/OrangeProfile.png';
+import Profile from './Profile.jsx';
 
 const Header = () => {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   return (
     <header className="header">
       <div className="logo-container">
@@ -32,6 +36,7 @@ const Header = () => {
           className="photo"
         />
       </div>
+      {isProfileOpen && <Profile onClose={() => setIsProfileOpen(false)} />}
     </header>
   );
 };
