@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Profile.css";
+import profile from '../assets/OrangeProfile.png';
 
 export default function Profile() {
   const [stats, setStats] = useState({
@@ -37,12 +38,12 @@ export default function Profile() {
     <div className="profile-page">
       <div className="profile-header">
         <h1>Мой профиль</h1>
-        <Link to="/" className="back-button">← На главную</Link>
+        <Link to="/" className="back-button">На главную</Link>
       </div>
 
       <div className="profile-content">
         <section className="user-info">
-          <div className="avatar">ИИ</div>
+          <img src={profile} alt="prf" className="avatar" />
           <div className="user-details">
             <h2>Иван Иванов</h2>
             <p>example@email.com</p>
@@ -73,7 +74,6 @@ export default function Profile() {
             <thead>
               <tr>
                 <th>Дата</th>
-                <th>Тема</th>
                 <th>Результат</th>
                 <th>Баллы</th>
               </tr>

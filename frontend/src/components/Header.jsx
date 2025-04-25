@@ -19,7 +19,6 @@ const Header = () => {
         <h2 className="subtitle">История россии</h2>
       </div>
 
-      {/* Табличка и метрики по центру */}
       <div className="stats-container">
         <table className="stats-table">
           <thead>
