@@ -1,12 +1,12 @@
 
 /* Подсветка правильного/неправильного ответа */
-.correct {
+/* .correct {
   border: 2px solid green !important;
 }
 
 .wrong {
   border: 2px solid red !important;
-}
+} */
 
 .question-card {
   margin-top: 20px;

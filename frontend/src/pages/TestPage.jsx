@@ -18,11 +18,11 @@ const secondsToHMS = (sec) => {
 };
 
 const Test = ({ variant }) => {
-  const { name, questions } = variant;
+  const { id, questions } = variant;
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [answers, setAnswers] = useState({});
-  const [secondsLeft, setSecondsLeft] = useState(10); // 10800
+  const [secondsLeft, setSecondsLeft] = useState(10800);
   const timeLeft = secondsToHMS(secondsLeft);
 
   const handleAnswerChange = (id, value) => {
@@ -57,19 +57,56 @@ const Test = ({ variant }) => {
   return (
     <main>
       <form onSubmit={handleSubmit}>
-        <h2 className="name-variant">№ {name}</h2>
-        {!isSubmitted && <p>Осталось: {timeLeft}</p>}
+        <h2 className="name-variant">Вариант № {id}</h2>
 
-        {questions.map((question, idx) => (
-          <Question
-            key={question.id}
-            question={question}
-            isSubmitted={isSubmitted}
-            userAnswer={answers[question.id] || ""}
-            onAnswerChange={handleAnswerChange}
-          />
-        ))}
-        
+        {!isSubmitted ? (
+          <div>
+            <p>Осталось: {timeLeft}</p>
+            {questions.map((question) => (
+              <Question
+                key={question.id}
+                question={question}
+                isSubmitted={isSubmitted}
+                userAnswer={answers[question.id] || ""}
+                onAnswerChange={handleAnswerChange}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>
+            <h3>Результаты теста</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Тип</th>
+                  <th>Ваш ответ</th>
+                  <th>Правильный ответ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {questions.map(({ id, answerType, correctAnswer }) => (
+                  <tr key={id}>
+                    <td>{id}</td>
+                    <td>{answerType}</td>
+                    <td
+                      className={
+                        answerType === "long"
+                          ? ""
+                          : (answers[id] === correctAnswer && "correct") ||
+                            "wrong"
+                      }
+                    >
+                      {answers[id]}
+                    </td>
+                    <td>{correctAnswer}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
         {/* // if (idx === 0){" "}
           //   return (
           //     <div key={question.id} className="question-card">
@@ -119,7 +156,7 @@ const Test = ({ variant }) => {
           //     </div>
           //   </div>
           // ); */}
-        
+
         <button type="submit" disabled={isSubmitted} className="submit-button">
           Завершить тест
         </button>
