@@ -7,3 +7,32 @@
 .wrong {
   border: 2px solid red !important;
 }
+
+.question-card {
+  margin-top: 20px;
+  padding: 25px;
+}
+
+.question-title {
+  text-align: left;
+}
+
+.question-text {
+  text-align: left;
+}
+
+.question-body {
+  white-space: pre-line;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.question-input {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.textarea-container {
+  margin: 0 auto;
+  text-align: center;
+}
