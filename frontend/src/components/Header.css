@@ -1,13 +1,16 @@
 .header {
   display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
   height: 10em;
-  padding: 0 1rem 0 0;
+  padding: 0 1rem;
   background-color: #ffffff;
   font-family: "PT Sans", Roboto, "Segoe UI", sans-serif;
   border-radius: 15px;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: 1rem;
   overflow: hidden;
 }
 
@@ -23,7 +26,6 @@
   height: 4em;
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
-  will-change: transform, filter;
 }
 
 .logo:hover {
@@ -38,13 +40,104 @@
   opacity: 0.8;
 }
 
+.stats-container {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  border-radius: 10px;
+
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #fd7811;
+}
+
+.stats-table th {
+  background-color: #fafafa;
+}
+
+.stats-table thead tr:first-child th {
+  border-bottom: none;
+}
+
+.stats-button {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #fd7811;
+  background-color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.stats-button:hover {
+  background-color: #fafafa;
+}
+
+.stats-table th.stats-header-cell {
+  text-align: center;
+}
+
+.stats-table th.stats-header-cell .stats-button {
+  display: inline-flex;
+  margin: 0 auto;
+}
+
+.profile-container {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translateX(-50%);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+.profile-text {
+  font-size: 1rem;
+}
+
 .photo-container {
   position: absolute;
-  top: 0;
   right: 113px;
+  top: 0;
   bottom: 0;
   display: flex;
   align-items: center;
+  z-index: 0;
 }
 
 .books {
@@ -62,39 +155,4 @@
   left: 113px;
   object-fit: contain;
   bottom: -21px;
-}
-
-.profile-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  z-index: 2;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.profile-link {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.profile-text {
-  font-size: 1rem;
-}
-
-.profile-icon {
-  width: 32px;
-  height: 32px;
-  background-color: #ffffff;
-  border-radius: 50%;
 }

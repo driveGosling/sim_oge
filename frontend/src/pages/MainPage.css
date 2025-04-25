@@ -1,19 +1,18 @@
 .main {
-  padding-top: 30px;
+  padding: 30px 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
 }
 
-/* Заголовки */
 .section h2 {
   color: #333333;
   margin-bottom: 1rem;
 }
 
-/* Секция тренировок */
 .section-tren {
   margin-bottom: 4rem;
 }
 
-/* Список вариантов с «угловой» рамкой */
 .section-tren .variants-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -21,20 +20,9 @@
   list-style: none;
   padding: 1rem;
   margin: 0;
-  position: relative; /* нужен для абсолютного позиционирования уголков */
+  position: relative;
 }
 
-/* Верхние уголки */
-.section-tren .variants-list::before,
-.section-tren .variants-list::after {
-  content: "";
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #fd7811;
-  border-radius: 3px;
-  z-index: 2;
-}
 
 .section-tren .variants-list::before {
   top: 0;
@@ -50,13 +38,9 @@
   border-bottom: none;
 }
 
-/* Нижние уголки (спаны внутри ul) */
 .section-tren .variants-list .corner-bl,
 .section-tren .variants-list .corner-br {
   position: absolute;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #fd7811;
   border-radius: 3px;
   z-index: 2;
 }
@@ -75,7 +59,6 @@
   border-left: none;
 }
 
-/* Карточки вариантов */
 .li-test {
   background: transparent;
   border: 1px solid #fd7811;
@@ -96,22 +79,9 @@
   display: block;
 }
 
-/* Секция конструктора */
 .section-construct {
-  position: relative; /* для уголков */
+  position: relative;
   color: #333333;
-}
-
-/* Верхние уголки для описания */
-.section-construct::before,
-.section-construct::after {
-  content: "";
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #fd7811;
-  border-radius: 3px;
-  z-index: 2;
 }
 
 .section-construct::before {
@@ -128,16 +98,6 @@
   border-bottom: none;
 }
 
-/* Нижние уголки (спаны внутри секции) */
-.section-construct .corner-bl,
-.section-construct .corner-br {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #fd7811;
-  border-radius: 3px;
-  z-index: 2;
-}
 
 .section-construct .corner-bl {
   bottom: 0;
@@ -156,19 +116,7 @@
 .descr-wrapper {
   position: relative;
   padding: 1rem;
-  margin: 1.5rem 0;       /* отступ снизу перед конструктором */
-}
-
-/* Верхние уголки рамки */
-.descr-wrapper::before,
-.descr-wrapper::after {
-  content: "";
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #fd7811;
-  border-radius: 3px;
-  z-index: 2;
+  margin: 1.5rem 0;
 }
 
 .descr-wrapper::before {
@@ -185,7 +133,6 @@
   border-bottom: none;
 }
 
-/* Нижние уголки (спаны внутри) */
 .descr-wrapper .corner-bl,
 .descr-wrapper .corner-br {
   position: absolute;
@@ -210,12 +157,12 @@
   border-left: none;
 }
 
-/* Стили текста внутри рамки */
 .descr {
   margin: 0;
-  font-size: 0.875rem;
-  font-weight: 200;
-  color: #333333;
+  padding: 0 4rem;      
+  font-size: 1rem;      
+  font-weight: 300;
   line-height: 1.6;
-  text-align: left;
+  color: #333333;
+  text-align: center;
 }
