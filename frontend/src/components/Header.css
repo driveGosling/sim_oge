@@ -1,20 +1,26 @@
+/* src/components/Header.css */
+
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 10em auto;
   align-items: center;
-  justify-content: space-between;
-  height: 10em;
-  padding: 0 1rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
   background-color: #ffffff;
   font-family: "PT Sans", Roboto, "Segoe UI", sans-serif;
   border-radius: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  padding: 0 1rem;
   margin-bottom: 1rem;
   overflow: hidden;
+  z-index: 100;
 }
 
+/* Лого и подзаголовок */
 .logo-container {
+  grid-column: 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,14 +46,53 @@
   opacity: 0.8;
 }
 
-.stats-container {
-  position: absolute;
-  left: 50%;
-  top: 60%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  border-radius: 10px;
+/* Кнопки Войти/Регистрация */
+.auth-buttons {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  gap: 1rem;
+  justify-self: center;
+}
 
+.btn-login,
+.btn-register {
+  font-size: 0.875rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-login {
+  background-color: #fd7811;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-login:hover {
+  background-color: #e06e0d;
+}
+
+.btn-register {
+  background-color: #ffffff;
+  color: #fd7811;
+  border: 1px solid #fd7811;
+}
+
+.btn-register:hover {
+  background-color: #fafafa;
+}
+
+/* Статистика (для авторизованных) */
+.stats-container {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  align-self: center;
+  position: relative;
+  border-radius: 10px;
+  z-index: 1;
 }
 
 .stats-table {
@@ -64,14 +109,6 @@
   background-color: #fafafa;
 }
 
-.stats-table th {
-  background-color: #fafafa;
-}
-
-.stats-table thead tr:first-child th {
-  border-bottom: none;
-}
-
 .stats-button {
   font-size: 0.875rem;
   padding: 0.25rem 0.5rem;
@@ -85,57 +122,12 @@
   background-color: #fafafa;
 }
 
-.stats-table th.stats-header-cell {
-  text-align: center;
-}
-
-.stats-table th.stats-header-cell .stats-button {
-  display: inline-flex;
-  margin: 0 auto;
-}
-
-.profile-container {
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  transform: translateX(-50%);
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  z-index: 2;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.profile-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  color: #333;
-}
-
-.profile-icon {
-  width: 32px;
-  height: 32px;
-  background-color: #ffffff;
-  border-radius: 50%;
-}
-
-.profile-text {
-  font-size: 1rem;
-}
-
+/* Фоновая графика справа */
 .photo-container {
-  position: absolute;
-  right: 113px;
-  top: 0;
-  bottom: 0;
+  grid-column: 3;
+  grid-row: 1;
+  position: relative;
+  height: 10em;
   display: flex;
   align-items: center;
   z-index: 0;
@@ -143,58 +135,35 @@
 
 .books {
   position: absolute;
-  top: -1em;
-  height: calc(100% + 2em);
+  bottom: -20px;
+  left: -113px;
+  height: calc(100% + 3em);
   object-fit: cover;
   z-index: 0;
 }
 
 .photo {
   position: relative;
-  z-index: 1;
+  left: 16px;
   height: 100%;
-  left: 113px;
   object-fit: contain;
-  bottom: -21px;
+  border-radius: 15px;
+  z-index: 1;
 }
 
-.auth-buttons {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  gap: 1rem;
-}
-
-.btn-login {
-  background-color: #fd7811;
-  color: #ffffff;
-  font-size: 0.875rem;
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn-login:hover {
-  background-color: #e06e0d;
-}
-
-/* кнопка «Регистрация» — белая с оранжевым текстом */
-.btn-register {
+/* Выдвижная панель под шапкой */
+.header-panel {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
   background-color: #ffffff;
-  color: #fd7811;
-  font-size: 0.875rem;
-  padding: 0.4rem 0.8rem;
-  border: 1px solid #fd7811;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
+  padding: 0 1rem;
+  z-index: 90;
 }
 
-.btn-register:hover {
-  background-color: #fafafa;
+.header.expanded .header-panel {
+  max-height: 400px; /* подгоните под свою форму */
+  padding: 1rem;
 }
-

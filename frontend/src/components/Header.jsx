@@ -1,3 +1,4 @@
+// src/components/Header.jsx
 import { useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
@@ -5,70 +6,96 @@ import logoSrc from '../assets/logo.png';
 import peterSrc from '../assets/peter.png';
 import bookSrc from '../assets/book.png';
 import profile from '../assets/OrangeProfile.png';
-import Profile from './Profile.jsx';
+
+// import Profile from './Profile.jsx';
+import Login from '../pages/Login.jsx';
+import Register from '../pages/Register.jsx';
 
 const Header = () => {
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [openForm, setOpenForm] = useState(null);
+  const [openForm, setOpenForm] = useState(null); // null | 'login' | 'register'
 
   const handleLogin = creds => {
-    // здесь можно выполнить запрос к API, а потом:
+    // TODO: вызов API, валидация и т.п.
     setIsAuthenticated(true);
     setOpenForm(null);
   };
 
+  const handleRegister = formData => {
+    // TODO: вызов API регистрации
+    setIsAuthenticated(true);
+    setOpenForm(null);
+  };
 
   return (
-    <header className="header">
+    <header className={`header ${openForm ? 'expanded' : ''}`}>
+      {/* === ЛОГО + ЗАГОЛОВОК === */}
       <div className="logo-container">
         <Link to="/">
           <img src={logoSrc} alt="logo" className="logo" />
         </Link>
         <h2 className="subtitle">История россии</h2>
       </div>
-    {isAuthenticated ? (
-      <div className="stats-container">
-        <table className="stats-table">
-          <thead>
-            <tr>
-              <th colSpan="3" className="stats-header-cell">
-                <Link to="/profile" className="profile-btn stats-button">
-                  <img src={profile} alt="prf" className="profile-icon" />
-                  <span className="profile-text">Профиль</span>
-                </Link>
-              </th>
-            </tr>
-            <tr>
-              <th>Попытки</th>
-              <th>Правильно</th>
-              <th>Успех </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>0</td>
-              <td>0</td>
-              <td>0%</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>) : ( 
-        <div className="auth-buttons">
-          <Link to="/login" className="btn-login">Войти</Link>
-          <Link to="/register" className="btn-register">Регистрация</Link>
-        </div> 
-        )}
-      
+
+      {/* === Если не в системе — кнопки Войти/Регистрация === */}
+      {!isAuthenticated ? (
+        <>
+          <div className="auth-buttons">
+            <button
+              className="btn-login"
+              onClick={() => setOpenForm(openForm === 'login' ? null : 'login')}
+            >
+              Войти
+            </button>
+            <button
+              className="btn-register"
+              onClick={() => setOpenForm(openForm === 'register' ? null : 'register')}
+            >
+              Регистрация
+            </button>
+          </div>
+
+          {/* выдвижная панель с формами */}
+          <div className="header-panel">
+            {openForm === 'login' && <Login onSubmit={handleLogin} />}
+            {openForm === 'register' && <Register onSubmit={handleRegister} />}
+          </div>
+        </>
+      ) : (
+        /* === Если залогинен — ваша таблица статистики === */
+        <div className="stats-container">
+          <table className="stats-table">
+            <thead>
+              <tr>
+                <th colSpan="3" className="stats-header-cell">
+                  <button className="stats-button">
+                    <img src={profile} alt="prf" className="profile-icon" />
+                    <span className="profile-text">Профиль</span>
+                  </button>
+                </th>
+              </tr>
+              <tr>
+                <th>Попытки</th>
+                <th>Правильно</th>
+                <th>Успех</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* === ФОТО-КОНТЕЙНЕР === */}
       <div className="photo-container">
         <img src={bookSrc} alt="Книги" className="books" />
-        <img
-          src={peterSrc}
-          alt="Пётр Первый"
-          className="photo"
-        />
+        <img src={peterSrc} alt="Пётр Первый" className="photo" />
       </div>
-      {isProfileOpen && <Profile onClose={() => setIsProfileOpen(false)} />}
     </header>
   );
 };
