@@ -227,8 +227,6 @@ const VariantConstructor = () => {
                 Развернутый ответ
               </label>
             </div>
-            <span className="corner-bl" />
-            <span className="corner-br" />
           </div>
         </div>
       </div>
