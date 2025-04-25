@@ -15,16 +15,35 @@ const Header = () => {
         <h2 className="subtitle">История россии</h2>
       </div>
 
-      <div className='profile-container'>
-        <Link to="/profile" className="profile-link">
-          <span className="profile-text">Профиль</span>
-          <img src={profile} alt="prf" className='profile-icon' />
-        </Link>
+      {/* Табличка и метрики по центру */}
+      <div className="stats-container">
+        <table className="stats-table">
+          <thead>
+            <tr>
+              <th colSpan="3" className="stats-header-cell">
+                <Link to="/profile" className="profile-btn stats-button">
+                  <img src={profile} alt="prf" className="profile-icon" />
+                  <span className="profile-text">Профиль</span>
+                </Link>
+              </th>
+            </tr>
+            <tr>
+              <th>Попытки</th>
+              <th>Правильно</th>
+              <th>Успех </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0%</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       
-      <div
-        className="photo-container"
-      >
+      <div className="photo-container">
         <img src={bookSrc} alt="Книги" className="books" />
         <img
           src={peterSrc}
