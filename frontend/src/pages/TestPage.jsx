@@ -117,7 +117,9 @@ const Test = ({ variant }) => {
           Завершить тест
         </button>
       </form>
+      <button className="back-btn">
       <Link to="/">Вернуться на главную</Link>
+      </button>
     </main>
   );
 };
