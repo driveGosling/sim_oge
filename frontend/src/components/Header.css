@@ -157,3 +157,44 @@
   object-fit: contain;
   bottom: -21px;
 }
+
+.auth-buttons {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-login {
+  background-color: #fd7811;
+  color: #ffffff;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-login:hover {
+  background-color: #e06e0d;
+}
+
+/* кнопка «Регистрация» — белая с оранжевым текстом */
+.btn-register {
+  background-color: #ffffff;
+  color: #fd7811;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #fd7811;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-register:hover {
+  background-color: #fafafa;
+}
+

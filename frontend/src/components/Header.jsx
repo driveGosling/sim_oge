@@ -9,6 +9,15 @@ import Profile from './Profile.jsx';
 
 const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [openForm, setOpenForm] = useState(null);
+
+  const handleLogin = creds => {
+    // здесь можно выполнить запрос к API, а потом:
+    setIsAuthenticated(true);
+    setOpenForm(null);
+  };
+
 
   return (
     <header className="header">
@@ -18,7 +27,7 @@ const Header = () => {
         </Link>
         <h2 className="subtitle">История россии</h2>
       </div>
-
+    {isAuthenticated ? (
       <div className="stats-container">
         <table className="stats-table">
           <thead>
@@ -44,7 +53,12 @@ const Header = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div>) : ( 
+        <div className="auth-buttons">
+          <Link to="/login" className="btn-login">Войти</Link>
+          <Link to="/register" className="btn-register">Регистрация</Link>
+        </div> 
+        )}
       
       <div className="photo-container">
         <img src={bookSrc} alt="Книги" className="books" />
