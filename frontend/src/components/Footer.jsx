@@ -24,9 +24,9 @@ const Footer = () => {
       <div className="footer-column">
         <h3 className="footer-title">Источники</h3>
         <ul className="footer-list">
-          <li><a href="https://narfu.ru/" target="_blank" rel="noopener noreferrer">Официальный сайт НарФУ</a></li>
-          <li><a href="https://istockphoto.com/" target="_blank" rel="noopener noreferrer">iStockPhoto</a></li>
-          <li><a href="https://rosbalt.ru/" target="_blank" rel="noopener noreferrer">Росбалт</a></li>
+          <li><a href="https://uchitel.pro/история-россии-предмет" target="_blank" rel="noopener noreferrer">Учитель</a></li>
+          <li><a href="https://www.universalinternetlibrary.ru/book/46892/ogl.shtml?ysclid=m9mus68489801928238/" target="_blank" rel="noopener noreferrer">Электронная библиотека</a></li>
+          <li><a href="https://www.rusempire.ru/istoriya-rossii-kratko.html/" target="_blank" rel="noopener noreferrer">История государства россиит</a></li>
         </ul>
       </div>
     </footer>

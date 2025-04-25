@@ -13,7 +13,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-app.get("/api/data", async (req, res) => {
+app.get("/api/variants", async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -23,7 +23,18 @@ app.get("/api/data", async (req, res) => {
             JSON_BUILD_OBJECT(
                 'id', q.id,
                 'text', q.text,
-                'correctAnswer', q.correct_answer
+                'correctAnswer', q.correct_answer,
+                'answerType', q.answer_type,
+                'answerOptions', (
+                SELECT JSON_AGG(
+                    JSON_BUILD_OBJECT(
+                        'id', ao.id,
+                        'optionText', ao.option_text
+                    )
+                )
+                FROM Answer_Options ao
+                WHERE ao.question_id = q.id
+            )
             )
         ) AS questions
     FROM 

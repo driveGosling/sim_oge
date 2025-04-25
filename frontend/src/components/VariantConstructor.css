@@ -1,4 +1,4 @@
-
+/* Конструктор — без псевдоэлементов */
 .constructor {
   display: flex;
   align-items: flex-start;
@@ -9,13 +9,11 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-
 .constructor-topicList {
   flex: 2;
   max-width: 70%;
   padding-right: 1.5rem;
 }
-
 
 .constructor-head {
   display: flex;
@@ -30,7 +28,6 @@
   font-size: 1rem;
   color: #fd7811;
 }
-
 
 .constructor-body {
   margin-top: 0.5rem;
@@ -48,12 +45,10 @@
   border-bottom: 1px solid #eee;
 }
 
-
 .counter {
   display: flex;
   align-items: center;
 }
-
 .counter button {
   background-color: #fd7811;
   color: #fff;
@@ -77,16 +72,75 @@
   padding: 0.25rem;
 }
 
-
+/* Кнопки и чекбоксы — теперь в рамке через .button-frame */
 .constructor-buttons {
+  /* переставляем только логику флекс-контейнера */
   flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  /* margin-top остаётся, но без псевдоэлементов */
   margin-top: 2rem;
 }
 
-.constructor-buttons .submit {
+/* Обёртка для кнопки + чекбоксов */
+.button-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+/* Верхний левый угол рамки */
+.button-frame::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 15px; height: 15px;
+  border: 1px solid #fd7811;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 3px;
+  z-index: 2;
+}
+/* Верхний правый угол рамки */
+.button-frame::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 15px; height: 15px;
+  border: 1px solid #fd7811;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 3px;
+  z-index: 2;
+}
+/* Нижний левый угол (спан внутри .button-frame) */
+.button-frame .corner-bl {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 15px; height: 15px;
+  border: 1px solid #fd7811;
+  border-top: none;
+  border-right: none;
+  border-radius: 3px;
+  z-index: 2;
+}
+/* Нижний правый угол (спан внутри .button-frame) */
+.button-frame .corner-br {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 15px; height: 15px;
+  border: 1px solid #fd7811;
+  border-top: none;
+  border-left: none;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+/* Стили кнопки и чекбоксов остаются ваши */
+.constructor-buttons .submit,
+.button-frame .submit {
   background-color: #fd7811;
   color: #fff;
   border: none;
@@ -98,7 +152,8 @@
   transition: background-color 0.2s ease, transform 0.1s ease;
   margin-bottom: 1rem;
 }
-.constructor-buttons .submit:hover {
+.constructor-buttons .submit:hover,
+.button-frame .submit:hover {
   background-color: #e06e0d;
   transform: translateY(-1px);
 }
@@ -134,4 +189,23 @@
   color: #333;
   font-size: 1rem;
   font-weight: 300;
+}
+
+.brief-label {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: #333;
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+/* разделитель «Развернутый ответ» */
+.li-divider {
+  list-style: none;
+  grid-column: 1 / -1;       /* если у вас грид — растянуть на всю ширину */
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: #333;
+  padding: 0.5rem 0;
+  text-align: left;
 }

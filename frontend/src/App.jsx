@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import fakeData from "./data/data.js";
 import Header from "./components/Header.jsx";
+import Profile from "./components/Profile.jsx";
 import Test from "./pages/TestPage.jsx";
 import Main from "./pages/MainPage.jsx";
 import Footer from "./components/Footer.jsx";
@@ -22,6 +23,7 @@ const AppRoutes = ({ variantsList }) => {
       ))}
       <Route path={"/test/custom"} element={<Test variant={customVariant} />} />
       <Route path="*" element={<div>Page Not Found</div>} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 };
@@ -32,7 +34,7 @@ const App = () => {
   useEffect(() => {
     const fetchVariants = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/data");
+        const response = await fetch("http://localhost:5000/api/variants");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
