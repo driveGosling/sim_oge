@@ -1,31 +1,70 @@
 import { useState } from 'react';
 import './Register.css';
+import {
+  isValidEmailSyntax,
+  getEmailSuggestion,
+  validatePassword,
+  validateUsername,
+  validateConfirmPassword
+} from '../contexts/Validator.jsx';
 
-const Register = ({ onSubmit, fieldErrors = {}, errors = '' }) => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const Register = ({ onSubmit }) => {
+  const [formValues, setFormValues] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [errors, setErrors] = useState('');
   const [agreed, setAgreed] = useState(false);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      return;
-    }
-    onSubmit({ username, email, password });
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormValues(prev => ({ ...prev, [name]: value }));
+    setFieldErrors(prev => ({ ...prev, [name]: false }));
+    setErrors('');
   };
 
   const handleCheckbox = e => setAgreed(e.target.checked);
-  const handleChange = e => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'username': setUsername(value); break;
-      case 'email': setEmail(value); break;
-      case 'password': setPassword(value); break;
-      case 'confirmPassword': setConfirmPassword(value); break;
-      default: break;
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const newErrors = {
+      username: !validateUsername(formValues.username),
+      email: !isValidEmailSyntax(formValues.email),
+      password: !validatePassword(formValues.password),
+      confirmPassword: !validateConfirmPassword(
+        formValues.password,
+        formValues.confirmPassword
+      )
+    };
+
+    if (Object.values(newErrors).includes(true)) {
+      setFieldErrors(newErrors);
+      if (newErrors.username) return setErrors('Введите корректное имя пользователя (только буквы)');
+      if (newErrors.email) return setErrors('Введите корректный email');
+      if (newErrors.password) return setErrors('Пароль должен быть не менее 6 символов');
+      if (newErrors.confirmPassword) return setErrors('Пароли не совпадают');
     }
+
+    const suggestion = getEmailSuggestion(formValues.email);
+    if (suggestion) {
+      setFieldErrors(prev => ({ ...prev, email: true }));
+      return setErrors(`Возможно, вы имели в виду ${suggestion}?`);
+    }
+
+    if (!agreed) {
+      return setErrors('Необходимо согласиться с условиями');
+    }
+
+    setErrors('');
+    setFieldErrors({});
+    onSubmit({
+      username: formValues.username,
+      email: formValues.email,
+      password: formValues.password
+    });
   };
 
   return (
@@ -39,11 +78,13 @@ const Register = ({ onSubmit, fieldErrors = {}, errors = '' }) => {
           className={`text-field__input ${fieldErrors.username ? 'input-error' : ''}`}
           type="text"
           placeholder=" "
-          value={username}
+          value={formValues.username}
           onChange={handleChange}
           required
         />
-        <label htmlFor="reg-username" className="text-field__label">Имя пользователя</label>
+        <label htmlFor="reg-username" className="text-field__label">
+          Имя пользователя
+        </label>
       </div>
 
       <div className="text-field text-field_floating">
@@ -53,7 +94,7 @@ const Register = ({ onSubmit, fieldErrors = {}, errors = '' }) => {
           className={`text-field__input ${fieldErrors.email ? 'input-error' : ''}`}
           type="email"
           placeholder=" "
-          value={email}
+          value={formValues.email}
           onChange={handleChange}
           required
         />
@@ -67,7 +108,7 @@ const Register = ({ onSubmit, fieldErrors = {}, errors = '' }) => {
           className={`text-field__input ${fieldErrors.password ? 'input-error' : ''}`}
           type="password"
           placeholder=" "
-          value={password}
+          value={formValues.password}
           onChange={handleChange}
           required
         />
@@ -81,11 +122,13 @@ const Register = ({ onSubmit, fieldErrors = {}, errors = '' }) => {
           className={`text-field__input ${fieldErrors.confirmPassword ? 'input-error' : ''}`}
           type="password"
           placeholder=" "
-          value={confirmPassword}
+          value={formValues.confirmPassword}
           onChange={handleChange}
           required
         />
-        <label htmlFor="confirm-password" className="text-field__label">Повторить пароль</label>
+        <label htmlFor="confirm-password" className="text-field__label">
+          Повторить пароль
+        </label>
       </div>
 
       <div className="terms">
@@ -98,7 +141,7 @@ const Register = ({ onSubmit, fieldErrors = {}, errors = '' }) => {
           required
         />
         <label htmlFor="terms" className="terms-label">
-         <p> Я ознакомился(-ась) и согласен(-на) с условиями Пользовательского соглашения и даю согласие на обработку персональных данных.</p>
+          Я ознакомился(-ась) и согласен(-на) с условиями пользовательского соглашения и даю согласие на обработку персональных данных.
         </label>
       </div>
 

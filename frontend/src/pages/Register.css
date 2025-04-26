@@ -117,3 +117,22 @@
 .form-register button:hover:not(:disabled) {
   background-color: #e06e0d;
 }
+
+@keyframes pulse-error {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 77, 79, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 79, 0);
+  }
+}
+
+.error-message-reg {
+  color: #ff4d4f;
+  text-align: center;
+  margin-top: -1rem;
+  margin-bottom: -0.5rem;
+}

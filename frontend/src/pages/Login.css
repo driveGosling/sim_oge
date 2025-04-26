@@ -33,7 +33,7 @@
 
 .text-field__input {
   width: 100%;
-  padding: 0.95rem;         /* увеличили размер полей */
+  padding: 0.95rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -58,8 +58,8 @@
 }
 
 .form-login button {
-  align-self: center;        /* центрируем кнопку */
-  padding: 0.6rem 1.5rem;    /* уменьшаем размеры */
+  align-self: center;
+  padding: 0.6rem 1.5rem;
   font-size: 0.8rem;
   background-color: #fd7811;
   color: #fff;
@@ -71,4 +71,28 @@
 
 .form-login button:hover {
   background-color: #e06e0d;
+}
+
+.input-error {
+  border-color: #ff4d4f !important;
+  animation: pulse-error 1s ease-in-out infinite;
+}
+
+@keyframes pulse-error {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 77, 79, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 79, 0);
+  }
+}
+
+.error-message-login {
+  color: #ff4d4f;
+  text-align: center;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
 }

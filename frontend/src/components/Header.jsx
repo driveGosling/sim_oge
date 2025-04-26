@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import { useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
@@ -7,7 +6,7 @@ import peterSrc from '../assets/peter.png';
 import bookSrc from '../assets/book.png';
 import profile from '../assets/OrangeProfile.png';
 
-// import Profile from './Profile.jsx';
+import Profile from './Profile.jsx';
 import Login from '../pages/Login.jsx';
 import Register from '../pages/Register.jsx';
 
@@ -16,20 +15,17 @@ const Header = () => {
   const [openForm, setOpenForm] = useState(null); // null | 'login' | 'register'
 
   const handleLogin = creds => {
-    // TODO: вызов API, валидация и т.п.
     setIsAuthenticated(true);
     setOpenForm(null);
   };
 
   const handleRegister = formData => {
-    // TODO: вызов API регистрации
     setIsAuthenticated(true);
     setOpenForm(null);
   };
 
   return (
     <header className={`header ${openForm ? 'expanded' : ''}`}>
-      {/* === ЛОГО + ЗАГОЛОВОК === */}
       <div className="logo-container">
         <Link to="/">
           <img src={logoSrc} alt="logo" className="logo" />
@@ -37,7 +33,6 @@ const Header = () => {
         <h2 className="subtitle">История россии</h2>
       </div>
 
-      {/* === Если не в системе — кнопки Войти/Регистрация === */}
       {!isAuthenticated ? (
         <>
           <div className="auth-buttons">
@@ -55,14 +50,12 @@ const Header = () => {
             </button>
           </div>
 
-          {/* выдвижная панель с формами */}
           <div className="header-panel">
             {openForm === 'login' && <Login onSubmit={handleLogin} />}
             {openForm === 'register' && <Register onSubmit={handleRegister} />}
           </div>
         </>
       ) : (
-        /* === Если залогинен — ваша таблица статистики === */
         <div className="stats-container">
           <table className="stats-table">
             <thead>
@@ -91,7 +84,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* === ФОТО-КОНТЕЙНЕР === */}
       <div className="photo-container">
         <img src={bookSrc} alt="Книги" className="books" />
         <img src={peterSrc} alt="Пётр Первый" className="photo" />
