@@ -7,26 +7,39 @@ const Login = ({ onSubmit }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // тут можно добавить реальный API-запрос
     onSubmit({ email, password });
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Пароль"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        required
-      />
+    <form className="form-login" onSubmit={handleSubmit}>
+      <h2>Вход</h2>
+
+      <div className="text-field text-field_floating">
+        <input
+          id="email"
+          className="text-field__input"
+          type="email"
+          placeholder=" "
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <label htmlFor="email" className="text-field__label">Email</label>
+      </div>
+
+      <div className="text-field text-field_floating">
+        <input
+          id="password"
+          className="text-field__input"
+          type="password"
+          placeholder=" "
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
+        <label htmlFor="password" className="text-field__label">Пароль</label>
+      </div>
+
       <button type="submit">Войти</button>
     </form>
   );

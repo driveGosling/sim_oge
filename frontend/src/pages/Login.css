@@ -1,28 +1,74 @@
-.login-form {
+.form-login {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   max-width: 300px;
   margin: 0 auto;
+  background: transparent;
+  padding: 1rem;
 }
 
-.login-form input {
+.form-login h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+  padding-left: 1rem;
+}
+
+.text-field {
+  position: relative;
+}
+
+.text-field__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   padding: 0.5rem;
+  pointer-events: none;
+  color: #666;
+  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+  transform-origin: 0 0;
+}
+
+.text-field__input {
+  width: 100%;
+  padding: 0.95rem;         /* увеличили размер полей */
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 0.9rem;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.login-form button {
-  padding: 0.5rem;
+.text-field__input::placeholder {
+  color: transparent;
+}
+
+.text-field__input:focus {
+  border-color: #fd7811;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(253, 120, 17, 0.25);
+}
+
+.text-field_floating .text-field__input:focus + .text-field__label,
+.text-field_floating .text-field__input:not(:placeholder-shown) + .text-field__label {
+  opacity: 0.65;
+  transform: scale(0.75) translateY(-0.4rem) translateX(0.16rem);
+}
+
+.form-login button {
+  align-self: center;        /* центрируем кнопку */
+  padding: 0.6rem 1.5rem;    /* уменьшаем размеры */
+  font-size: 0.8rem;
   background-color: #fd7811;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
 }
 
-.login-form button:hover {
+.form-login button:hover {
   background-color: #e06e0d;
 }
