@@ -1,9 +1,15 @@
 import "./Question.css";
 
-const Question = ({ question, isSubmitted, userAnswer, onAnswerChange }) => {
+const Question = ({
+  index,
+  question,
+  isSubmitted,
+  userAnswer,
+  onAnswerChange,
+}) => {
   return (
     <div className="question-card">
-      <h3 className="question-title">Вопрос {question.id}</h3>
+      <h3 className="question-title">Вопрос № {index}</h3>
       <div className="question-text">{question.text}</div>
 
       {question.body && <div className="question-body">{question.body}</div>}

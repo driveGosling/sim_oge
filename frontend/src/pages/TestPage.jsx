@@ -62,8 +62,9 @@ const Test = ({ variant }) => {
         {!isSubmitted ? (
           <div>
             <p>Осталось: {timeLeft}</p>
-            {questions.map((question) => (
+            {questions.map((question, index) => (
               <Question
+                index={index + 1}
                 key={question.id}
                 question={question}
                 isSubmitted={isSubmitted}
@@ -79,14 +80,16 @@ const Test = ({ variant }) => {
               <thead>
                 <tr>
                   <th>№</th>
+                  <th>id</th>
                   <th>Тип</th>
                   <th>Ваш ответ</th>
                   <th>Правильный ответ</th>
                 </tr>
               </thead>
               <tbody>
-                {questions.map(({ id, answerType, correctAnswer }) => (
+                {questions.map(({ id, answerType, correctAnswer }, index) => (
                   <tr key={id}>
+                    <td>{index + 1}</td>
                     <td>{id}</td>
                     <td>{answerType}</td>
                     <td
@@ -162,7 +165,7 @@ const Test = ({ variant }) => {
         </button>
       </form>
       <button className="back-btn">
-      <Link to="/">Вернуться на главную</Link>
+        <Link to="/">Вернуться на главную</Link>
       </button>
     </main>
   );
