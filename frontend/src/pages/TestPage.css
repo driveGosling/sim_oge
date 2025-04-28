@@ -1,9 +1,15 @@
+.main-form {
+  padding: 30px 6rem;
+}
+
+
 .answer-row {
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 
 .answer-label {
   margin-right: 0.5rem;

@@ -56,7 +56,7 @@ const Test = ({ variant }) => {
 
   return (
     <main>
-      <form onSubmit={handleSubmit}>
+      <form className="main-form" onSubmit={handleSubmit}>
         <h2 className="name-variant">Вариант № {id}</h2>
 
         {!isSubmitted ? (

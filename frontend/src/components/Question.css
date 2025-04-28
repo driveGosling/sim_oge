@@ -32,7 +32,31 @@
   text-align: left;
 }
 
+.input-pose {
+ margin-left: 10px;
+ border-radius: 5px;
+ border: 1px solid #ccc;
+}
+
+.input-pose:focus {
+  border-color: #fd7811;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(253, 120, 17, 0.25);
+}
+
 .textarea-container {
   margin: 0 auto;
   text-align: center;
+}
+
+.textarea-style {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 700px;
+}
+
+.textarea-style:focus {
+  border-color: #fd7811;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(253, 120, 17, 0.25);
 }

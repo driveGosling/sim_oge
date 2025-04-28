@@ -25,6 +25,7 @@ const Question = ({
         Ответ:
         {question.answerType === "short" ? (
           <input
+            className="input-pose"
             type="text"
             name={question.id}
             value={userAnswer}
@@ -38,6 +39,7 @@ const Question = ({
               автоматически.
             </p>
             <textarea
+              className="textarea-style"
               name={question.id}
               disabled={isSubmitted}
               value={userAnswer}
