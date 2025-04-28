@@ -5,7 +5,6 @@ import logoSrc from '../assets/logo.png';
 import peterSrc from '../assets/peter.png';
 import bookSrc from '../assets/book.png';
 import profile from '../assets/OrangeProfile.png';
-
 import Profile from './Profile.jsx';
 import Login from '../pages/Login.jsx';
 import Register from '../pages/Register.jsx';
@@ -61,10 +60,10 @@ const Header = () => {
             <thead>
               <tr>
                 <th colSpan="3" className="stats-header-cell">
-                  <button className="stats-button">
-                    <img src={profile} alt="prf" className="profile-icon" />
-                    <span className="profile-text">Профиль</span>
-                  </button>
+                <Link to="/profile" className="profile-btn stats-button">
+                  <img src={profile} alt="prf" className="profile-icon" />
+                  <span className="profile-text">Профиль</span>
+                </Link>
                 </th>
               </tr>
               <tr>
