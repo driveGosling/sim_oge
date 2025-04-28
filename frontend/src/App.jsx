@@ -7,6 +7,8 @@ import Test from "./pages/TestPage.jsx";
 import Main from "./pages/MainPage.jsx";
 import Footer from "./components/Footer.jsx";
 import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
 
 const AppRoutes = ({ variantsList }) => {
   const { customVariant } = useVariant();
@@ -24,6 +26,8 @@ const AppRoutes = ({ variantsList }) => {
       <Route path={"/test/custom"} element={<Test variant={customVariant} />} />
       <Route path="*" element={<div>Page Not Found</div>} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 };
