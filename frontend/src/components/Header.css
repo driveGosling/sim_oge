@@ -110,6 +110,9 @@
   background-color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .stats-button:hover {
@@ -160,4 +163,36 @@
 
 .header.expanded .header-panel {
   max-height: 500px;
+}
+
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+}
+
+.profile-text {
+  font-size: 1rem;
+}
+
+.stats-table th.stats-header-cell {
+  text-align: center;
+}
+
+.stats-table th.stats-header-cell .stats-button {
+  display: inline-flex;
+  margin: 0 auto;
 }
