@@ -8,8 +8,8 @@ const VariantConstructor = () => {
   const [topics, setTopics] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [topicQuestionCount, setTopicQuestionCount] = useState({}); // Хранит информацию о количестве вопросов из выбранных тем в виде { id_темы: число_вопросов }
-  const [briefAnswer, setBriefAnswer] = useState(false);
-  const [detailedAnswer, setDetailedAnswer] = useState(false);
+  const [shortQuestionsActive, setShortQuestionsActive] = useState(false);
+  const [longQuestionsActive, setLongQuestionsActive] = useState(false);
   const { handleCustomVariant } = useVariant();
   const navigate = useNavigate();
 
@@ -33,14 +33,16 @@ const VariantConstructor = () => {
         const resp = await fetch("http://localhost:5000/api/topics");
         if (!resp.ok) throw new Error();
         const apiTopics = await resp.json();
-        const all = dedupe([...apiTopics, ...extraTopics]);
-        setTopics(all);
-        setTopicQuestionCount(Object.fromEntries(all.map((t) => [t.id, 0])));
+        // const all = dedupe([...apiTopics, ...extraTopics]);
+        setTopics(apiTopics);
+        setTopicQuestionCount(
+          Object.fromEntries(apiTopics.map((t) => [t.id, 0]))
+        );
       } catch {
-        const base = fakeData.topics;
-        const all = dedupe([...base, ...extraTopics]);
-        setTopics(all);
-        setTopicQuestionCount(Object.fromEntries(all.map((t) => [t.id, 0])));
+        const topics = fakeData.topics;
+        // const all = dedupe([...base, ...extraTopics]);
+        setTopics(topics);
+        setTopicQuestionCount(Object.fromEntries(topics.map((t) => [t.id, 0])));
       }
     };
 
@@ -73,14 +75,43 @@ const VariantConstructor = () => {
       [id]: Math.max(0, (prev[id] || 0) - 1),
     }));
 
-  // Функция из преисподней, не пытайтесь пока разобраться, я её упрощу
-  // Вкратнце: это все нужно чтобы сформировать список вопросов для варианта
-  // Поскольку вопросы выбирались на основе темы и типа, а не конкретного id вопроса,
-  // вопросы с нужной темой и типом извлекаются из общего списка похожих вопросов случайным образом
+  const toggleQuestions = (topics, setActive, active) => {
+    if (active) {
+      setTopicQuestionCount((prev) => {
+        const updatedCounts = { ...prev };
+        topics.forEach(({ id }) => {
+          updatedCounts[id] = 0;
+        });
+        return updatedCounts;
+      });
+      setActive(false);
+    } else {
+      setTopicQuestionCount((prev) => {
+        const updatedCounts = { ...prev };
+        topics.forEach(({ id }) => {
+          updatedCounts[id] = (updatedCounts[id] || 0) + 1;
+        });
+        return updatedCounts;
+      });
+      setActive(true);
+    }
+  };
+
+  const handleShortToggle = () => {
+    toggleQuestions(
+      shortQTopics,
+      setShortQuestionsActive,
+      shortQuestionsActive
+    );
+  };
+
+  const handleLongToggle = () => {
+    toggleQuestions(longQTopics, setLongQuestionsActive, longQuestionsActive);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const selectedQuestions = [];
-    const selectedQuestionIds = [];
 
     Object.entries(topicQuestionCount).forEach(([selectedTopicId, count]) => {
       const filteredQuestions = questions.filter(
@@ -93,52 +124,13 @@ const VariantConstructor = () => {
         Math.min(count, shuffled.length)
       );
       selectedQuestions.push(...questionsToSelect);
-      selectedQuestionIds.push(...questionsToSelect.map(question => question.id));
     });
 
-    let questionsWithAnswerOptions = [];
-
     if (selectedQuestions.length) {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/api/answerOptions?ids=${selectedQuestionIds.join(
-            ","
-          )}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch answer options");
-        }
-        const answerOptions = await response.json();
-
-        const answerOptionsMap = answerOptions.reduce((acc, option) => {
-          if (!acc[option.questionId]) {
-            acc[option.questionId] = [];
-          }
-          acc[option.questionId].push(option);
-          return acc;
-        }, {});
-
-        questionsWithAnswerOptions = selectedQuestions.map((question) => ({
-          ...question,
-          answerOptions: answerOptionsMap[question.id] || [],
-        }));
-      } catch (error) {
-        questionsWithAnswerOptions = selectedQuestions.map((question) => {
-          const fakeQuestion = fakeData.questions.find(
-            (q) => q.id === question.id
-          );
-
-          return {
-            ...fakeQuestion,
-            answerOptions: fakeQuestion?.answerOptions || [],
-          };
-        });
-      }
       await handleCustomVariant({
         id: Date.now(),
         name: `Вариант ${new Date().toLocaleTimeString()}`,
-        questions: questionsWithAnswerOptions,
+        questions: selectedQuestions,
       });
       navigate("/test/custom");
     }
@@ -211,19 +203,11 @@ const VariantConstructor = () => {
             </button>
             <div className="answer-options">
               <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={briefAnswer}
-                  onChange={() => setBriefAnswer(!briefAnswer)}
-                />
+                <input type="checkbox" onChange={handleShortToggle} />
                 Краткий ответ
               </label>
               <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={detailedAnswer}
-                  onChange={() => setDetailedAnswer(!detailedAnswer)}
-                />
+                <input type="checkbox" onChange={handleLongToggle} />
                 Развернутый ответ
               </label>
             </div>
