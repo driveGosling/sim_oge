@@ -56,7 +56,7 @@ const Test = ({ variant }) => {
 
   return (
     <main>
-      <form onSubmit={handleSubmit}>
+      <form className="main-form" onSubmit={handleSubmit}>
         <h2 className="name-variant">Вариант № {id}</h2>
 
         {!isSubmitted ? (
@@ -159,14 +159,10 @@ const Test = ({ variant }) => {
           //     </div>
           //   </div>
           // ); */}
-
         <button type="submit" disabled={isSubmitted} className="submit-button">
           Завершить тест
         </button>
       </form>
-      <button className="back-btn">
-        <Link to="/">Вернуться на главную</Link>
-      </button>
     </main>
   );
 };
