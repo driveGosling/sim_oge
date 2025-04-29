@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Profile.css";
 import profile from '../assets/OrangeProfile.png';
 
 export default function Profile() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/login");
+  };
+  
   const [stats, setStats] = useState({
     attempts: 0,
     correct: 0,
@@ -38,7 +45,10 @@ export default function Profile() {
     <div className="profile-page">
       <div className="profile-header">
         <h1>Мой профиль</h1>
-        <Link to="/" className="back-button">На главную</Link>
+        <div className="header-buttons">
+         <Link to="/" className="back-button">На главную</Link>
+         <button onClick={handleLogout} className="logout-button">Выход</button>
+        </div>
       </div>
 
       <div className="profile-content">

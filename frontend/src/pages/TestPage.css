@@ -89,6 +89,11 @@
   cursor: not-allowed;
 }
 
+.submit-button:hover {
+  background-color: #e1690d;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .question-header {
   font-size: 14px;
   display: flex;
