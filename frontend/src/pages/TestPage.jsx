@@ -110,58 +110,21 @@ const Test = ({ variant }) => {
           </div>
         )}
 
-        {/* // if (idx === 0){" "}
-          //   return (
-          //     <div key={question.id} className="question-card">
-          //       <h3 className="question-header">{question.text}</h3>
-          //       <div className="answer-row">
-          //         <table className="answer-table">
-          //           <thead>
-          //             <tr>
-          //               <th>А</th>
-          //               <th>Б</th>
-          //               <th>В</th>
-          //             </tr>
-          //           </thead>
-          //           <tbody>
-          //             <tr>
-          //               {[0, 1, 2].map((i) => (
-          //                 <td key={i}>
-          //                   <input
-          //                     type="text"
-          //                     maxLength={1}
-          //                     className="table-input"
-          //                     disabled={isSubmitted}
-          //                     value={answers[question.id]?.[i] || ""}
-          //                     onChange={(e) => handleTableChange(question.id, i, e.target.value)}
-          //                   />
-          //                 </td>
-          //               ))}
-          //             </tr>
-          //           </tbody>
-          //         </table>
-          //       </div>
-          //     </div>
-          //   );
-          // }
-          // return (
-          //   <div key={question.id} className="question-card">
-          //     <h3 className="question-header">{question.text}</h3>
-          //     <div className="answer-row">
-          //       <span className="answer-label">Ответ:</span>
-          //       <input
-          //         type="text"
-          //         className="answer-input"
-          //         value={answers[question.id] || ""}
-          //         disabled={isSubmitted}
-          //         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-          //       />
-          //     </div>
-          //   </div>
-          // ); */}
-        <button type="submit" disabled={isSubmitted} className="submit-button">
-          Завершить тест
-        </button>
+        {!isSubmitted ? (
+          <button
+            type="submit"
+            disabled={isSubmitted}
+            className="submit-button"
+          >
+            Завершить тест
+          </button>
+        ) : (
+          <button className="back-btn">
+            <Link className="link" to="/">
+              Вернуться на главную
+            </Link>
+          </button>
+        )}
       </form>
     </main>
   );
