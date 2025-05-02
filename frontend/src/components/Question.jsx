@@ -11,16 +11,13 @@ const Question = ({
     <div className="question-card">
       <h3 className="question-title">Вопрос № {index}</h3>
       <div className="question-text">{question.text}</div>
-
       {question.body && <div className="question-body">{question.body}</div>}
-
       {question.image && (
         <img
           src={`/images/${question.image}`}
           style={{ width: "300px", height: "auto" }}
         />
       )}
-
       <div className="question-input">
         Ответ:
         {question.answerType === "short" ? (

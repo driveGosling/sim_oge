@@ -16,16 +16,13 @@ const Main = ({ variantsList }) => (
             <Link to={`/test/${idx + 1}`}>{`Вариант ${idx + 1}`}</Link>
           </li>
         ))} */}
-        {
-          variantsList.map(({ id }) => (
-            <li className="li-test" key={id}>
-              <Link to={`/test/${id}`}>{`Вариант ${id}`}</Link>
-            </li>
-          ))
-        }
+        {variantsList.map(({ id }) => (
+          <li className="li-test" key={id}>
+            <Link to={`/test/${id}`}>{`Вариант ${id}`}</Link>
+          </li>
+        ))}
       </ul>
     </section>
-
     <h2>Конструктор вариантов</h2>
     <div className="descr-wrapper">
       <p className="descr">
