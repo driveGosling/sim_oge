@@ -79,11 +79,6 @@
   text-decoration: underline;
 }
 
-.error-message-reg {
-  color: #ff4d4f;
-  text-align: center;
-  margin: 0.5rem 0;
-}
 
 .input-error {
   border-color: #ff4d4f !important;
@@ -97,6 +92,8 @@
 }
 
 .form-register button {
+  position: relative;
+  top: 7px;
   align-self: center;
   padding: 0.6rem 1.5rem;
   font-size: 0.8rem;
@@ -106,7 +103,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  margin-top: -19px;
+  margin-top: 10px;
 }
 
 .form-register button:disabled {
@@ -131,6 +128,8 @@
 }
 
 .error-message-reg {
+  position: relative;
+  top: 10px;
   color: #ff4d4f;
   text-align: center;
   margin-top: -1rem;

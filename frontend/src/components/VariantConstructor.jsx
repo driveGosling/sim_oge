@@ -7,7 +7,7 @@ import fakeData from "../data/data.js";
 const VariantConstructor = () => {
   const [topics, setTopics] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [topicQuestionCount, setTopicQuestionCount] = useState({}); // Хранит информацию о количестве вопросов из выбранных тем в виде { id_темы: число_вопросов }
+  const [topicQuestionCount, setTopicQuestionCount] = useState({});
   const [shortQuestionsActive, setShortQuestionsActive] = useState(false);
   const [longQuestionsActive, setLongQuestionsActive] = useState(false);
   const { handleCustomVariant } = useVariant();

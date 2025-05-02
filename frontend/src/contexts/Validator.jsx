@@ -10,7 +10,6 @@ export function isValidEmailSyntax(email) {
   return EMAIL_REGEXP.test(email);
 }
 
-// Проверка — домен входит в список известных
 export function getEmailSuggestion(email) {
   const match = email.toLowerCase().match(/@(.+)$/);
   if (!match) return null;

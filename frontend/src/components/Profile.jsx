@@ -6,32 +6,29 @@ import profileImg from '../assets/OrangeProfile.png';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, logout, API } = useAuth();
-  const [stats, setStats] = useState({
-    attempts: 0,
-    correct: 0,
-    successRate: 0,
-    history: []
-  });
+  const { user, loading, logout, API } = useAuth();
+  const [stats, setStats] = useState({ attempts: 0, correct: 0, successRate: 0, history: [] });
+
+  useEffect(() => {
+    if (!loading && user) {
+      API.get("/profile").catch(() => {});
+      const mockHistory = Array(5).fill().map((_, i) => ({
+        date: new Date(Date.now() - i * 86400000).toLocaleDateString(),
+        theme: ["Математика", "История", "Литература"][i % 3],
+        result: i % 4 !== 0 ? "Правильно" : "Неправильно",
+        score: Math.floor(Math.random() * 100)
+      }));
+      setStats({ attempts: 15, correct: 12, successRate: 80, history: mockHistory });
+    }
+  }, [loading, user, API]);
 
   if (loading) {
     return null;
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
-
-  useEffect(() => {
-    API.get("/profile").catch(() => {});
-    const mockHistory = Array(5).fill().map((_, i) => ({
-      date: new Date(Date.now() - i * 86400000).toLocaleDateString(),
-      theme: ["Математика", "История", "Литература"][i % 3],
-      result: i % 4 !== 0 ? "Правильно" : "Неправильно",
-      score: Math.floor(Math.random() * 100)
-    }));
-    setStats({ attempts: 15, correct: 12, successRate: 80, history: mockHistory });
-  }, [API]);
 
   const handleLogout = () => {
     logout();

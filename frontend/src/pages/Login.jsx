@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import './Login.css';
 import {
   isValidEmailSyntax,
@@ -7,11 +7,11 @@ import {
   validatePassword
 } from '../contexts/Validator.jsx';
 
-const Login = ({ onSubmit }) => {
+const Login = () => {
+  const { login } = useAuth();
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -26,23 +26,24 @@ const Login = ({ onSubmit }) => {
       email: !isValidEmailSyntax(formValues.email),
       password: !validatePassword(formValues.password)
     };
-    if (Object.values(newErrors).includes(true)) {
+    if (Object.values(newErrors).some(Boolean)) {
       setFieldErrors(newErrors);
-      if (newErrors.email) return setError('Введите корректный Email');
-      if (newErrors.password) return setError('Пароль должен быть не менее 6 символов');
+      if (newErrors.email) setError('Введите корректный Email');
+      else if (newErrors.password) setError('Пароль должен быть не менее 6 символов');
+      return;
     }
 
     const suggestion = getEmailSuggestion(formValues.email);
     if (suggestion) {
       setFieldErrors(prev => ({ ...prev, email: true }));
-      return setError(`Возможно, вы имели в виду ${suggestion}?`);
+      setError(`Возможно, вы имели в виду ${suggestion}?`);
+      return;
     }
 
     try {
-      await onSubmit({ email: formValues.email, password: formValues.password });
+      await login({ email: formValues.email, password: formValues.password });
     } catch (e) {
-      const msg = e.response?.data?.message || 'Ошибка при входе';
-      setError(msg);
+      setError(e.response?.data?.message || 'Ошибка при входе');
     }
   };
 
