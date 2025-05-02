@@ -1,0 +1,44 @@
+/* Container for each question item */
+.hover-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* Hide the info box by default */
+.hover-info {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+  border-radius: 4px;
+}
+
+/* Show info box on hover of container */
+.hover-container:hover .hover-info {
+  display: block;
+}
+
+/* Style for question body text inside info box */
+.question-body {
+  font-size: 0.9em;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* Style for question images inside info box */
+.question-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+}

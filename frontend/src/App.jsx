@@ -11,6 +11,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 
 import CreateQuestionForm from "./components/CreateQuestionForm.jsx";
+import CreateVariantForm from "./components/CreateVariantForm.jsx";
 
 const AppRoutes = ({ variantsList }) => {
   const { customVariant } = useVariant();
@@ -31,6 +32,7 @@ const AppRoutes = ({ variantsList }) => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/createQuestion" element={<CreateQuestionForm />}></Route>
+      <Route path="/createVariant" element={<CreateVariantForm />}></Route>
     </Routes>
   );
 };

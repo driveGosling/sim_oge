@@ -10,6 +10,8 @@ function CreateQuestionForm() {
     correctAnswer: "",
     answerType: "short",
     topicId: "",
+    body: "",
+    imageFile: null,
   });
 
   useEffect(() => {
@@ -19,27 +21,64 @@ function CreateQuestionForm() {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+
+    if (name === "image") {
+      setFormData((prev) => ({ ...prev, imageFile: files[0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
-    const payload = convertKeysToSnakeCase(formData);
-    console.log(payload);
     e.preventDefault();
+
+    const snakeCaseData = convertKeysToSnakeCase({
+      text: formData.text,
+      correctAnswer: formData.correctAnswer,
+      answerType: formData.answerType,
+      topicId: formData.topicId,
+      body: formData.body,
+    });
+
+    const formPayload = new FormData();
+    Object.entries(snakeCaseData).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        formPayload.append(key, value);
+      }
+    });
+
+    if (formData.imageFile) {
+      formPayload.append("image", formData.imageFile);
+    }
+
+    console.log(formPayload);
+
     fetch("/api/questions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: formPayload,
     })
       .then((res) => res.json())
       .then((data) => {
         alert("Question created successfully!");
+        setFormData({
+          text: "",
+          correctAnswer: "",
+          answerType: "short",
+          topicId: "",
+          body: "",
+          imageFile: null,
+        });
       })
       .catch((err) => alert("Error creating question"));
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form
+      className="form-container"
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+    >
       <label className="form-label">Question Text:</label>
       <textarea
         className="form-input"
@@ -49,12 +88,30 @@ function CreateQuestionForm() {
         required
       />
 
+      <label className="form-label">Body:</label>
+      <textarea
+        className="form-input"
+        name="body"
+        value={formData.body}
+        onChange={handleChange}
+      />
+
+      <label className="form-label">Upload Image:</label>
+      <input
+        className="form-input"
+        type="file"
+        name="image"
+        accept="image/*"
+        onChange={handleChange}
+      />
+
       <label className="form-label">Correct Answer:</label>
       <input
         className="form-input"
         name="correctAnswer"
         value={formData.correctAnswer}
         onChange={handleChange}
+        required
       />
 
       <label className="form-label">Answer Type:</label>
