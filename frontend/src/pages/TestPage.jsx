@@ -99,9 +99,21 @@ const Test = ({ variant }) => {
           </div>
         )}
 
-        <button type="submit" disabled={isSubmitted} className="submit-button">
-          Завершить тест
-        </button>
+        {!isSubmitted ? (
+          <button
+            type="submit"
+            disabled={isSubmitted}
+            className="submit-button"
+          >
+            Завершить тест
+          </button>
+        ) : (
+          <button className="back-btn">
+            <Link className="link" to="/">
+              Вернуться на главную
+            </Link>
+          </button>
+        )}
       </form>
     </main>
   );

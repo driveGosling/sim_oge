@@ -2,7 +2,6 @@
   padding: 30px 6rem;
 }
 
-
 .answer-row {
   margin-bottom: 1rem;
   display: flex;
@@ -10,12 +9,10 @@
   justify-content: center;
 }
 
-
 .answer-label {
   margin-right: 0.5rem;
   font-weight: 300;
 }
-
 
 .answer-table {
   border-collapse: collapse;
@@ -43,10 +40,10 @@
   line-height: 1;
 }
 
-.question-card:nth-of-type(n+2) .answer-input {
-  width: auto;                
-  height: auto;               
-  padding: 0.25rem 0.5rem;    
+.question-card:nth-of-type(n + 2) .answer-input {
+  width: auto;
+  height: auto;
+  padding: 0.25rem 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: left;
@@ -55,7 +52,6 @@
   display: inline-block;
   margin: 0;
 }
-
 
 /* Убедитесь, что table-layout фиксирован */
 .answer-table {
@@ -70,7 +66,6 @@
   width: 28px;
   height: 28px;
 }
-
 
 .submit-button {
   background-color: #fd7811;
@@ -104,7 +99,8 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
@@ -129,4 +125,10 @@ th {
   margin: 1rem auto;
   cursor: pointer;
   padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.link {
+  text-decoration: none;
+  color: #fff;
 }
