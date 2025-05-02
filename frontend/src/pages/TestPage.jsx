@@ -29,15 +29,6 @@ const Test = ({ variant }) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
   };
 
-  // const handleTableChange = (id, idx, value) => {
-  //   setAnswers((prev) => {
-  //     const arr = prev[id] || [];
-  //     const newArr = [...arr];
-  //     newArr[idx] = value;
-  //     return { ...prev, [id]: newArr };
-  //   });
-  // };
-
   const handleSubmit = (e) => {
     e?.preventDefault();
     setIsSubmitted(true);
@@ -80,7 +71,6 @@ const Test = ({ variant }) => {
               <thead>
                 <tr>
                   <th>№</th>
-                  <th>id</th>
                   <th>Тип</th>
                   <th>Ваш ответ</th>
                   <th>Правильный ответ</th>
@@ -90,7 +80,6 @@ const Test = ({ variant }) => {
                 {questions.map(({ id, answerType, correctAnswer }, index) => (
                   <tr key={id}>
                     <td>{index + 1}</td>
-                    <td>{id}</td>
                     <td>{answerType}</td>
                     <td
                       className={
