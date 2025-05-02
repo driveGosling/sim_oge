@@ -3,24 +3,22 @@ const cors = require("cors");
 const { Pool } = require("pg");
 require("dotenv").config();
 
+const path = require("path");
+
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-const toCamelCase = (obj) => {
-  const newObj = {};
-  for (const key in obj) {
-    const camelCaseKey = key.replace(/(_\w)/g, (m) => m[1].toUpperCase());
-    newObj[camelCaseKey] = obj[key];
-  }
-  return newObj;
-};
+// START API routes
 
 app.get("/api/variants", async (req, res) => {
   try {
@@ -28,35 +26,36 @@ app.get("/api/variants", async (req, res) => {
       SELECT 
         v.id AS id,
         v.name AS name,
-        JSON_AGG(
+        CASE 
+          WHEN COUNT(q.id) = 0 THEN NULL
+          ELSE JSON_AGG(
             JSON_BUILD_OBJECT(
-                'id', q.id,
-                'text', q.text,
-                'correctAnswer', q.correct_answer,
-                'answerType', q.answer_type,
-                'answerOptions', (
-                SELECT JSON_AGG(
-                    JSON_BUILD_OBJECT(
-                        'id', ao.id,
-                        'optionText', ao.option_text
-                    )
-                )
-                FROM Answer_Options ao
-                WHERE ao.question_id = q.id
+              'id', q.id,
+              'text', q.text,
+              'body', q.body,
+              'image', q.image,
+              'correctAnswer', q.correct_answer,
+              'answerType', q.answer_type,
+              'topic', json_build_object(
+                'id', t.id,
+                'name', t.name
+              )
             )
-            )
-        ) AS questions
-    FROM 
+          )
+      END AS questions
+      FROM 
         Variants v
-    LEFT JOIN 
+      LEFT JOIN 
         Questions_Variants qv ON v.id = qv.variant_id
-    LEFT JOIN 
+      LEFT JOIN 
         Questions q ON q.id = qv.question_id
-    GROUP BY 
+      LEFT JOIN
+        Topics t ON q.topic_id = t.id
+      GROUP BY 
         v.id, v.name
-    ORDER BY 
+      ORDER BY 
         v.id;
-  `);
+    `);
 
     res.json(result.rows);
   } catch (err) {
@@ -67,12 +66,14 @@ app.get("/api/variants", async (req, res) => {
 
 app.get("/api/topics", async (req, res) => {
   try {
-    const result = await pool.query(`SELECT id, name, questions_type AS "questionsType" FROM topics`);
+    const result = await pool.query(
+      `SELECT id, name, questions_type AS "questionsType" FROM topics`
+    );
 
-    const topics = result.rows.map(topic => ({
+    const topics = result.rows.map((topic) => ({
       id: topic.id,
       name: topic.name,
-      questionsType: topic.questionsType
+      questionsType: topic.questionsType,
     }));
 
     res.json(topics);
@@ -86,55 +87,46 @@ app.get("/api/questions", async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT 
-        JSON_BUILD_OBJECT(
-          'id', q.id,
-          'topicId', q.topic_id,
-          'answerType', q.answer_type,
-          'correctAnswer', q.correct_answer,
-          'text', q.text
-        )
+        COALESCE(
+          JSON_AGG(
+            JSON_BUILD_OBJECT(
+              'id', q.id,
+              'text', q.text,
+              'body', q.body,
+              'image', q.image,
+              'correctAnswer', q.correct_answer,
+              'answerType', q.answer_type,
+              'topic', json_build_object(
+                'id', t.id,
+                'name', t.name
+              )
+            )
+          ) FILTER (WHERE q.id IS NOT NULL),
+          '[]'
+        ) AS questions
       FROM 
         Questions q
+      LEFT JOIN 
+        Topics t ON q.topic_id = t.id
     `);
 
-    const questions = result.rows.map(row => row.json_build_object);
-
-    res.json(questions);
+    res.json(result.rows[0].questions);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error");
   }
 });
 
-app.get("/api/answerOptions", async (req, res) => {
-  const questionIds = req.query.ids;
-  if (!questionIds) {
-    return res.status(400).send("No question IDs provided");
-  }
+app.post("/api/questions", async (req, res) => {
+  const { text, correct_answer, answer_type, topic_id } = req.body;
 
-  const ids = questionIds.split(",").map(id => parseInt(id, 10));
+  console.log(text, correct_answer, answer_type, topic_id);
+});
 
-  try {
-    const result = await pool.query(`
-      SELECT 
-        ao.id AS id,
-        ao.option_text,
-        ao.question_id
-      FROM 
-        Answer_Options ao
-      WHERE 
-        ao.question_id = ANY($1)
-    `, [ids]);
+// END API routes
 
-    const answerOptions = result.rows.map(toCamelCase);
-    
-    console.log(answerOptions)
-
-    res.json(answerOptions);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
 });
 
 app.listen(port, () => {
