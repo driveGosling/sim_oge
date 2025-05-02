@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import {
   isValidEmailSyntax,
@@ -11,6 +11,7 @@ const Login = ({ onSubmit }) => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -19,7 +20,7 @@ const Login = ({ onSubmit }) => {
     setError('');
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const newErrors = {
       email: !isValidEmailSyntax(formValues.email),
@@ -30,14 +31,19 @@ const Login = ({ onSubmit }) => {
       if (newErrors.email) return setError('Введите корректный Email');
       if (newErrors.password) return setError('Пароль должен быть не менее 6 символов');
     }
+
     const suggestion = getEmailSuggestion(formValues.email);
     if (suggestion) {
       setFieldErrors(prev => ({ ...prev, email: true }));
       return setError(`Возможно, вы имели в виду ${suggestion}?`);
     }
-    setError('');
-    setFieldErrors({});
-    onSubmit({ email: formValues.email, password: formValues.password });
+
+    try {
+      await onSubmit({ email: formValues.email, password: formValues.password });
+    } catch (e) {
+      const msg = e.response?.data?.message || 'Ошибка при входе';
+      setError(msg);
+    }
   };
 
   return (
