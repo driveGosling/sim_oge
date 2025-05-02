@@ -10,6 +10,8 @@ import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 
+import CreateQuestionForm from "./components/CreateQuestionForm.jsx";
+
 const AppRoutes = ({ variantsList }) => {
   const { customVariant } = useVariant();
 
@@ -28,6 +30,7 @@ const AppRoutes = ({ variantsList }) => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/createQuestion" element={<CreateQuestionForm />}></Route>
     </Routes>
   );
 };

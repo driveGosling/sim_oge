@@ -111,11 +111,12 @@ const VariantConstructor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const selectedQuestions = [];
 
     Object.entries(topicQuestionCount).forEach(([selectedTopicId, count]) => {
       const filteredQuestions = questions.filter(
-        (question) => question.topicId === Number(selectedTopicId)
+        (question) => question.topic.id === Number(selectedTopicId)
       );
 
       const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5);

@@ -20,6 +20,22 @@ const secondsToHMS = (sec) => {
 const Test = ({ variant }) => {
   const { id, questions } = variant;
 
+  console.log(questions);
+
+  if (!questions || questions.length === 0) {
+    return (
+      <main>
+        <h2>Вариант № {id}</h2>
+        <p>На данный момент вопросы отсутствуют.</p>
+        <button className="back-btn">
+          <Link className="link" to="/">
+            Вернуться на главную
+          </Link>
+        </button>
+      </main>
+    );
+  }
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [answers, setAnswers] = useState({});
   const [secondsLeft, setSecondsLeft] = useState(10800);
