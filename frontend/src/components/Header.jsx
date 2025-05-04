@@ -1,26 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import logoSrc from '../assets/logo.png';
 import peterSrc from '../assets/peter.png';
 import bookSrc from '../assets/book.png';
 import profile from '../assets/OrangeProfile.png';
-import Profile from './Profile.jsx';
 import Login from '../pages/Login.jsx';
 import Register from '../pages/Register.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 const Header = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [openForm, setOpenForm] = useState(null); // null | 'login' | 'register'
-
-  const handleLogin = creds => {
-    setIsAuthenticated(true);
+  const { user } = useAuth();
+  const [openForm, setOpenForm] = useState(null); 
+  
+  useEffect(() => {
     setOpenForm(null);
-  };
+  }, [user]);
 
-  const handleRegister = formData => {
-    setIsAuthenticated(true);
-    setOpenForm(null);
+  const handleToggle = (form) => {
+    setOpenForm(prev => (prev === form ? null : form));
   };
 
   return (
@@ -29,29 +27,29 @@ const Header = () => {
         <Link to="/">
           <img src={logoSrc} alt="logo" className="logo" />
         </Link>
-        <h2 className="subtitle">История россии</h2>
+        <h2 className="subtitle">История России</h2>
       </div>
 
-      {!isAuthenticated ? (
+      {!user ? (
         <>
           <div className="auth-buttons">
             <button
               className="btn-login"
-              onClick={() => setOpenForm(openForm === 'login' ? null : 'login')}
+              onClick={() => handleToggle('login')}
             >
               Войти
             </button>
             <button
               className="btn-register"
-              onClick={() => setOpenForm(openForm === 'register' ? null : 'register')}
+              onClick={() => handleToggle('register')}
             >
               Регистрация
             </button>
           </div>
 
           <div className="header-panel">
-            {openForm === 'login' && <Login onSubmit={handleLogin} />}
-            {openForm === 'register' && <Register onSubmit={handleRegister} />}
+            {openForm === 'login' && <Login />}
+            {openForm === 'register' && <Register />}
           </div>
         </>
       ) : (
@@ -60,10 +58,10 @@ const Header = () => {
             <thead>
               <tr>
                 <th colSpan="3" className="stats-header-cell">
-                <Link to="/profile" className="profile-btn stats-button">
-                  <img src={profile} alt="prf" className="profile-icon" />
-                  <span className="profile-text">Профиль</span>
-                </Link>
+                  <Link to="/profile" className="profile-btn stats-button">
+                    <img src={profile} alt="prf" className="profile-icon" />
+                    <span className="profile-text">Профиль</span>
+                  </Link>
                 </th>
               </tr>
               <tr>

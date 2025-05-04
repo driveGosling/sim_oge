@@ -1,62 +1,56 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./Profile.css";
-import profile from '../assets/OrangeProfile.png';
+import { Link, useNavigate, Navigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext.jsx";
+import './Profile.css';
+import profileImg from '../assets/OrangeProfile.png';
 
 export default function Profile() {
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/login");
-  };
-  
-  const [stats, setStats] = useState({
-    attempts: 0,
-    correct: 0,
-    successRate: 0,
-    history: []
-  });
+  const { user, loading, logout, API } = useAuth();
+  const [stats, setStats] = useState({ attempts: 0, correct: 0, successRate: 0, history: [] });
 
   useEffect(() => {
-    const loadStats = async () => {
-      try {
-        const response = await fetch('/api/user/stats');
-        const data = response.ok ? await response.json() : {
-          attempts: 15,
-          correct: 12,
-          successRate: 80,
-          history: Array(5).fill().map((_, i) => ({
-            date: new Date(Date.now() - i * 86400000).toLocaleDateString(),
-            theme: ["Математика", "История", "Литература"][i % 3],
-            result: i % 4 !== 0 ? "Правильно" : "Неправильно",
-            score: Math.floor(Math.random() * 100)
-          }))
-        };
-        setStats(data);
-      } catch {
-        console.log("Using mock data");
-      }
-    };
-    loadStats();
-  }, []);
+    if (!loading && user) {
+      API.get("/profile").catch(() => {});
+      const mockHistory = Array(5).fill().map((_, i) => ({
+        date: new Date(Date.now() - i * 86400000).toLocaleDateString(),
+        theme: ["Математика", "История", "Литература"][i % 3],
+        result: i % 4 !== 0 ? "Правильно" : "Неправильно",
+        score: Math.floor(Math.random() * 100)
+      }));
+      setStats({ attempts: 15, correct: 12, successRate: 80, history: mockHistory });
+    }
+  }, [loading, user, API]);
+
+  if (loading) {
+    return null;
+  }
+
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div className="profile-page">
       <div className="profile-header">
         <h1>Мой профиль</h1>
         <div className="header-buttons">
-         <Link to="/" className="back-button">На главную</Link>
-         <button onClick={handleLogout} className="logout-button">Выход</button>
+          <Link to="/" className="back-button">На главную</Link>
+          <button onClick={handleLogout} className="logout-button">Выйти</button>
         </div>
       </div>
 
       <div className="profile-content">
         <section className="user-info">
-          <img src={profile} alt="prf" className="avatar" />
+          <img src={profileImg} alt="avatar" className="avatar" />
           <div className="user-details">
-            <h2>Иван Иванов</h2>
-            <p>example@email.com</p>
+            <h2>{user.username}</h2>
+            <p>{user.email}</p>
           </div>
         </section>
 
@@ -84,13 +78,14 @@ export default function Profile() {
             <thead>
               <tr>
                 <th>Дата</th>
+                <th>Тема</th>
                 <th>Результат</th>
                 <th>Баллы</th>
               </tr>
             </thead>
             <tbody>
-              {stats.history.map((item, index) => (
-                <tr key={index}>
+              {stats.history.map((item, i) => (
+                <tr key={i}>
                   <td>{item.date}</td>
                   <td>{item.theme}</td>
                   <td className={`result ${item.result === "Правильно" ? "correct" : "incorrect"}`}>

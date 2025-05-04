@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import {
   isValidEmailSyntax,
   getEmailSuggestion,
@@ -8,7 +10,8 @@ import {
   validateConfirmPassword
 } from '../contexts/Validator.jsx';
 
-const Register = ({ onSubmit }) => {
+const Register = () => {
+  const { register } = useAuth();
   const [formValues, setFormValues] = useState({
     username: '',
     email: '',
@@ -16,55 +19,53 @@ const Register = ({ onSubmit }) => {
     confirmPassword: ''
   });
   const [fieldErrors, setFieldErrors] = useState({});
-  const [errors, setErrors] = useState('');
+  const [error, setError] = useState('');
   const [agreed, setAgreed] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = e => {
     const { name, value } = e.target;
     setFormValues(prev => ({ ...prev, [name]: value }));
     setFieldErrors(prev => ({ ...prev, [name]: false }));
-    setErrors('');
+    setError('');
   };
 
-  const handleCheckbox = e => setAgreed(e.target.checked);
+  const handleCheckbox = () => setAgreed(prev => !prev);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    const { username, email, password, confirmPassword } = formValues;
+
     const newErrors = {
-      username: !validateUsername(formValues.username),
-      email: !isValidEmailSyntax(formValues.email),
-      password: !validatePassword(formValues.password),
-      confirmPassword: !validateConfirmPassword(
-        formValues.password,
-        formValues.confirmPassword
-      )
+      username: !validateUsername(username),
+      email: !isValidEmailSyntax(email),
+      password: !validatePassword(password),
+      confirmPassword: !validateConfirmPassword(password, confirmPassword)
     };
 
-    if (Object.values(newErrors).includes(true)) {
+    if (Object.values(newErrors).some(Boolean)) {
       setFieldErrors(newErrors);
-      if (newErrors.username) return setErrors('Введите корректное имя пользователя (только буквы)');
-      if (newErrors.email) return setErrors('Введите корректный email');
-      if (newErrors.password) return setErrors('Пароль должен быть не менее 6 символов');
-      if (newErrors.confirmPassword) return setErrors('Пароли не совпадают');
+      if (newErrors.username) return setError('Введите корректное имя пользователя (только буквы)');
+      if (newErrors.email) return setError('Введите корректный email');
+      if (newErrors.password) return setError('Пароль должен быть не менее 6 символов');
+      if (newErrors.confirmPassword) return setError('Пароли не совпадают');
     }
 
-    const suggestion = getEmailSuggestion(formValues.email);
+    const suggestion = getEmailSuggestion(email);
     if (suggestion) {
       setFieldErrors(prev => ({ ...prev, email: true }));
-      return setErrors(`Возможно, вы имели в виду ${suggestion}?`);
+      return setError(`Возможно, вы имели в виду ${suggestion}?`);
     }
 
     if (!agreed) {
-      return setErrors('Необходимо согласиться с условиями');
+      return setError('Необходимо согласиться с условиями');
     }
 
-    setErrors('');
-    setFieldErrors({});
-    onSubmit({
-      username: formValues.username,
-      email: formValues.email,
-      password: formValues.password
-    });
+    try {
+      await register({ username, email, password });
+    } catch (e) {
+      setError(e.response?.data?.message || 'Ошибка при регистрации');
+    }
   };
 
   return (
@@ -75,27 +76,25 @@ const Register = ({ onSubmit }) => {
         <input
           id="reg-username"
           name="username"
-          className={`text-field__input ${fieldErrors.username ? 'input-error' : ''}`}
           type="text"
           placeholder=" "
           value={formValues.username}
           onChange={handleChange}
+          className={`text-field__input ${fieldErrors.username ? 'input-error' : ''}`}
           required
         />
-        <label htmlFor="reg-username" className="text-field__label">
-          Имя пользователя
-        </label>
+        <label htmlFor="reg-username" className="text-field__label">Имя пользователя</label>
       </div>
 
       <div className="text-field text-field_floating">
         <input
           id="reg-email"
           name="email"
-          className={`text-field__input ${fieldErrors.email ? 'input-error' : ''}`}
           type="email"
           placeholder=" "
           value={formValues.email}
           onChange={handleChange}
+          className={`text-field__input ${fieldErrors.email ? 'input-error' : ''}`}
           required
         />
         <label htmlFor="reg-email" className="text-field__label">Email</label>
@@ -105,11 +104,11 @@ const Register = ({ onSubmit }) => {
         <input
           id="reg-password"
           name="password"
-          className={`text-field__input ${fieldErrors.password ? 'input-error' : ''}`}
           type="password"
           placeholder=" "
           value={formValues.password}
           onChange={handleChange}
+          className={`text-field__input ${fieldErrors.password ? 'input-error' : ''}`}
           required
         />
         <label htmlFor="reg-password" className="text-field__label">Пароль</label>
@@ -119,16 +118,14 @@ const Register = ({ onSubmit }) => {
         <input
           id="confirm-password"
           name="confirmPassword"
-          className={`text-field__input ${fieldErrors.confirmPassword ? 'input-error' : ''}`}
           type="password"
           placeholder=" "
           value={formValues.confirmPassword}
           onChange={handleChange}
+          className={`text-field__input ${fieldErrors.confirmPassword ? 'input-error' : ''}`}
           required
         />
-        <label htmlFor="confirm-password" className="text-field__label">
-          Повторить пароль
-        </label>
+        <label htmlFor="confirm-password" className="text-field__label">Повторить пароль</label>
       </div>
 
       <div className="terms">
@@ -138,16 +135,15 @@ const Register = ({ onSubmit }) => {
           type="checkbox"
           checked={agreed}
           onChange={handleCheckbox}
-          required
         />
         <label htmlFor="terms" className="terms-label">
-          Я ознакомился(-ась) и согласен(-на) с условиями пользовательского соглашения и даю согласие на обработку персональных данных.
+          Я согласен(-на) с условиями пользовательского соглашения и обработкой данных.
         </label>
       </div>
 
-      {errors && <p className="error-message-reg">{errors}</p>}
+      {error && <p className="error-message-reg">{error}</p>}
 
-      <button type="submit" disabled={!agreed}>Зарегистрироваться</button>
+      <button type="submit" className="btn-register">Зарегистрироваться</button>
     </form>
   );
 };
