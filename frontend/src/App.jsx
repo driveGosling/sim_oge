@@ -11,6 +11,8 @@ import Register from "./pages/Register.jsx";
 import CreateQuestionForm from "./components/CreateQuestionForm.jsx";
 import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
 import { AuthProvider, useAuth } from "./contexts/AuthContext.jsx";
+import CreateVariantForm from "./components/CreateVariantForm.jsx";
+
 
 const AppRoutes = ({ variantsList }) => {
   const { customVariant } = useVariant();
