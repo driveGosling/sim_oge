@@ -13,7 +13,6 @@ import { VariantProvider, useVariant } from "./contexts/VariantContext.jsx";
 import { AuthProvider, useAuth } from "./contexts/AuthContext.jsx";
 import CreateVariantForm from "./components/CreateVariantForm.jsx";
 
-
 const AppRoutes = ({ variantsList }) => {
   const { customVariant } = useVariant();
   const { user, login } = useAuth();
@@ -21,8 +20,12 @@ const AppRoutes = ({ variantsList }) => {
   return (
     <Routes>
       <Route path="/" element={<Main variantsList={variantsList} />} />
-      {variantsList.map(v => (
-        <Route key={v.id} path={`/test/${v.id}`} element={<Test variant={v} />} />
+      {variantsList.map((v) => (
+        <Route
+          key={v.id}
+          path={`/test/${v.id}`}
+          element={<Test variant={v} />}
+        />
       ))}
       <Route path="/test/custom" element={<Test variant={customVariant} />} />
 
@@ -35,6 +38,7 @@ const AppRoutes = ({ variantsList }) => {
       />
       <Route path="/register" element={<Register />} />
       <Route path="/createQuestion" element={<CreateQuestionForm />} />
+      <Route path="/createVariant" element={<CreateVariantForm />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

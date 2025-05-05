@@ -100,9 +100,9 @@ function CreateVariantForm() {
 
   return (
     <div className="cv-container">
-      <h2 className="cv-heading">Create New Variant</h2>
+      <h2 className="cv-heading">Создать новый вариант</h2>
       <form className="cv-form" onSubmit={handleSubmit}>
-        <label className="cv-label">Variant Name:</label>
+        <label className="cv-label">Название варианта:</label>
         <input
           className="cv-input-text"
           type="text"
@@ -111,13 +111,13 @@ function CreateVariantForm() {
           required
         />
 
-        <label className="cv-label">Filter by Topic:</label>
+        <label className="cv-label">Фильтровать по теме:</label>
         <select
           className="cv-select"
           value={selectedTopic}
           onChange={(e) => setSelectedTopic(e.target.value)}
         >
-          <option value="all">All Topics</option>
+          <option value="all">Все темы</option>
           {topics.map((topic) => (
             <option key={topic.id} value={topic.name}>
               {topic.name}
@@ -125,19 +125,19 @@ function CreateVariantForm() {
           ))}
         </select>
 
-        <label className="cv-label">Search Questions:</label>
+        <label className="cv-label">Поиск вопросов:</label>
         <input
           className="cv-input-text"
           type="text"
-          placeholder="Search by question text..."
+          placeholder="Искать по тексту вопроса..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <div className="cv-questions-section">
-          <h3 className="cv-questions-header">Select Questions:</h3>
+          <h3 className="cv-questions-header">Выберите вопросы:</h3>
           {filteredQuestions.length === 0 ? (
-            <p>No questions match your search.</p>
+            <p>Нет вопросов, соответствующих вашему поиску.</p>
           ) : (
             filteredQuestions.map((q) => (
               <div key={q.id} className="cv-question-item hover-container">
@@ -152,14 +152,14 @@ function CreateVariantForm() {
                   htmlFor={`question-${q.id}`}
                   className="cv-question-label"
                 >
-                  {q.text} (Topic: {q.topic.name})
+                  {q.text} (Тема: {q.topic.name})
                 </label>
                 <div className="hover-info">
                   <p className="question-body">{q.body}</p>
                   {q.image && (
                     <img
                       src={q.image}
-                      alt="Question visual"
+                      alt="Визуализация вопроса"
                       className="question-image"
                     />
                   )}
@@ -170,7 +170,7 @@ function CreateVariantForm() {
         </div>
 
         <button type="submit" className="cv-submit-button">
-          Create Variant
+          Создать вариант
         </button>
       </form>
     </div>

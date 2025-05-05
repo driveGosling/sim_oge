@@ -74,75 +74,80 @@ function CreateQuestionForm() {
   };
 
   return (
-    <form
-      className="form-container"
-      onSubmit={handleSubmit}
-      encType="multipart/form-data"
-    >
-      <label className="form-label">Question Text:</label>
-      <textarea
-        className="form-input"
-        name="text"
-        value={formData.text}
-        onChange={handleChange}
-        required
-      />
-
-      <label className="form-label">Body:</label>
-      <textarea
-        className="form-input"
-        name="body"
-        value={formData.body}
-        onChange={handleChange}
-      />
-
-      <label className="form-label">Upload Image:</label>
-      <input
-        className="form-input"
-        type="file"
-        name="image"
-        accept="image/*"
-        onChange={handleChange}
-      />
-
-      <label className="form-label">Correct Answer:</label>
-      <input
-        className="form-input"
-        name="correctAnswer"
-        value={formData.correctAnswer}
-        onChange={handleChange}
-        required
-      />
-
-      <label className="form-label">Answer Type:</label>
-      <select
-        name="answerType"
-        value={formData.answerType}
-        onChange={handleChange}
+    <div className="cq-container">
+      <h2 className="cq-heading">Создать новый вопрос</h2>
+      <form
+        className="cq-form"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
       >
-        <option value="short">Short</option>
-        <option value="long">Long</option>
-      </select>
+        <label className="cq-label">Текст вопроса:</label>
+        <textarea
+          className="cq-input"
+          name="text"
+          value={formData.text}
+          onChange={handleChange}
+          required
+        />
 
-      <label className="form-label">Topic:</label>
-      <select
-        name="topicId"
-        value={formData.topicId}
-        onChange={handleChange}
-        required
-      >
-        <option value="">Select Topic</option>
-        {topics.map((topic) => (
-          <option key={topic.id} value={topic.id}>
-            {topic.name}
-          </option>
-        ))}
-      </select>
+        <label className="cq-label">Содержание:</label>
+        <textarea
+          className="cq-input"
+          name="body"
+          value={formData.body}
+          onChange={handleChange}
+        />
 
-      <button className="form-button" type="submit">
-        Create Question
-      </button>
-    </form>
+        <label className="cq-label">Загрузить изображение:</label>
+        <input
+          className="cq-input"
+          type="file"
+          name="image"
+          accept="image/*"
+          onChange={handleChange}
+        />
+
+        <label className="cq-label">Правильный ответ:</label>
+        <input
+          className="cq-input"
+          name="correctAnswer"
+          value={formData.correctAnswer}
+          onChange={handleChange}
+          required
+        />
+
+        <label className="cq-label">Тип ответа:</label>
+        <select
+          className="cq-select"
+          name="answerType"
+          value={formData.answerType}
+          onChange={handleChange}
+        >
+          <option value="short">Короткий</option>
+          <option value="long">Развернутый</option>
+        </select>
+
+        <label className="cq-label">Тема:</label>
+        <select
+          className="cq-select"
+          name="topicId"
+          value={formData.topicId}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Выберите тему</option>
+          {topics.map((topic) => (
+            <option key={topic.id} value={topic.id}>
+              {topic.name}
+            </option>
+          ))}
+        </select>
+
+        <button className="cq-button" type="submit">
+          Создать вопрос
+        </button>
+      </form>
+    </div>
   );
 }
 
