@@ -32,6 +32,18 @@ const Main = ({ variantsList }) => (
       </p>
     </div>
     <VariantConstructor />
+    <div className="btns-container">
+      <button className="btn">
+        <Link className="link" to={"/createQuestion"}>
+          Загрузить вопрос
+        </Link>
+      </button>
+      <button className="btn">
+        <Link className="link" to={"/createVariant"}>
+          Загрузить вариант
+        </Link>
+      </button>
+    </div>
   </main>
 );
 

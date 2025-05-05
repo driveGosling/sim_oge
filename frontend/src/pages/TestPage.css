@@ -53,7 +53,6 @@
   margin: 0;
 }
 
-/* Убедитесь, что table-layout фиксирован */
 .answer-table {
   border-collapse: collapse;
   table-layout: fixed;
@@ -116,6 +115,7 @@ th {
 .wrong {
   background-color: #ffc0c0;
 }
+
 .back-btn {
   background-color: #fd7811;
   color: #fff;
@@ -126,9 +126,4 @@ th {
   cursor: pointer;
   padding: 0.5rem 1rem;
   text-decoration: none;
-}
-
-.link {
-  text-decoration: none;
-  color: #fff;
 }
