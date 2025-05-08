@@ -146,3 +146,52 @@ exports.createVariant = async (req, res) => {
     client.release();
   }
 };
+
+exports.createAttempt = async (req, res) => {
+  const {
+    user_id,
+    variant_id,
+    total_questions,
+    correct_questions,
+    successful,
+  } = req.body;
+
+  if (
+    !user_id ||
+    !variant_id ||
+    total_questions == null ||
+    correct_questions == null ||
+    successful == null
+  ) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO Attempts (user_id, variant_id, total_questions, correct_questions, successful)
+         VALUES ($1, $2, $3, $4, $5)
+         RETURNING *`,
+      [user_id, variant_id, total_questions, correct_questions, successful]
+    );
+
+    res.status(201).json({ message: "Attempt saved", attempt: result.rows[0] });
+  } catch (err) {
+    console.error("Error creating attempt:", err);
+    res.status(500).json({ error: "Failed to save attempt" });
+  }
+};
+
+exports.getUserAttempts = async (req, res) => {
+  const userId = req.userId;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM Attempts WHERE user_id = $1 ORDER BY created_at DESC`,
+      [userId]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch attempts" });
+  }
+};

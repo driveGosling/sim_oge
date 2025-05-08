@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react';
-import './Header.css';
-import { Link } from 'react-router-dom';
-import logoSrc from '../assets/logo.png';
-import peterSrc from '../assets/peter.png';
-import bookSrc from '../assets/book.png';
-import profile from '../assets/OrangeProfile.png';
-import Login from '../pages/Login.jsx';
-import Register from '../pages/Register.jsx';
-import { useAuth } from '../contexts/AuthContext.jsx';
+import { useState, useEffect } from "react";
+import "./Header.css";
+import { Link } from "react-router-dom";
+import logoSrc from "../assets/logo.png";
+import peterSrc from "../assets/peter.png";
+import bookSrc from "../assets/book.png";
+import profile from "../assets/OrangeProfile.png";
+import Login from "../pages/Login.jsx";
+import Register from "../pages/Register.jsx";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 const Header = () => {
-  const { user } = useAuth();
-  const [openForm, setOpenForm] = useState(null); 
-  
+  const { user, stats } = useAuth();
+  const [openForm, setOpenForm] = useState(null);
+
   useEffect(() => {
     setOpenForm(null);
   }, [user]);
 
   const handleToggle = (form) => {
-    setOpenForm(prev => (prev === form ? null : form));
+    setOpenForm((prev) => (prev === form ? null : form));
   };
 
   return (
-    <header className={`header ${openForm ? 'expanded' : ''}`}>
+    <header className={`header ${openForm ? "expanded" : ""}`}>
       <div className="logo-container">
         <Link to="/">
           <img src={logoSrc} alt="logo" className="logo" />
@@ -33,23 +33,20 @@ const Header = () => {
       {!user ? (
         <>
           <div className="auth-buttons">
-            <button
-              className="btn-login"
-              onClick={() => handleToggle('login')}
-            >
+            <button className="btn-login" onClick={() => handleToggle("login")}>
               Войти
             </button>
             <button
               className="btn-register"
-              onClick={() => handleToggle('register')}
+              onClick={() => handleToggle("register")}
             >
               Регистрация
             </button>
           </div>
 
           <div className="header-panel">
-            {openForm === 'login' && <Login />}
-            {openForm === 'register' && <Register />}
+            {openForm === "login" && <Login />}
+            {openForm === "register" && <Register />}
           </div>
         </>
       ) : (
@@ -72,9 +69,9 @@ const Header = () => {
             </thead>
             <tbody>
               <tr>
-                <td>0</td>
-                <td>0</td>
-                <td>0%</td>
+                <td>{stats.attempts}</td>
+                <td>{stats.correct}</td>
+                <td>{stats.successRate}%</td>
               </tr>
             </tbody>
           </table>
