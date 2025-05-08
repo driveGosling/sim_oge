@@ -25,6 +25,7 @@
 }
 
 .logo {
+  will-change: auto;
   height: 4em;
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
@@ -150,6 +151,7 @@
 }
 
 .header-panel {
+  will-change: transform;
   grid-column: 1 / -1;
   grid-row: 2;
   max-height: 0;
