@@ -55,7 +55,6 @@
   background: ;
 }
 
-/* Сброс стилей для li, ничего умнее не придумал */
 .footer-list li {
   background: transparent;
   margin: 0;

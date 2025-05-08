@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import fakeData from "./data/data.js";
 import Header from "./components/Header.jsx";
-import Profile from "./components/Profile.jsx";
+import Profile from "./pages/Profile.jsx";
 import Test from "./pages/TestPage.jsx";
 import Main from "./pages/MainPage.jsx";
 import Footer from "./components/Footer.jsx";
