@@ -1,24 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext.jsx";
-import './Profile.css';
-import profileImg from '../assets/OrangeProfile.png';
+import "./Profile.css";
+import profileImg from "../assets/OrangeProfile.png";
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, loading, logout, API } = useAuth();
-  const [stats, setStats] = useState({ attempts: 0, correct: 0, successRate: 0, history: [] });
+  const { user, stats, loading, logout, API } = useAuth();
 
   useEffect(() => {
     if (!loading && user) {
       API.get("/profile").catch(() => {});
-      const mockHistory = Array(5).fill().map((_, i) => ({
-        date: new Date(Date.now() - i * 86400000).toLocaleDateString(),
-        theme: ["Математика", "История", "Литература"][i % 3],
-        result: i % 4 !== 0 ? "Правильно" : "Неправильно",
-        score: Math.floor(Math.random() * 100)
-      }));
-      setStats({ attempts: 15, correct: 12, successRate: 80, history: mockHistory });
     }
   }, [loading, user, API]);
 
@@ -40,8 +32,12 @@ export default function Profile() {
       <div className="profile-header">
         <h1>Мой профиль</h1>
         <div className="header-buttons">
-          <Link to="/" className="back-button">На главную</Link>
-          <button onClick={handleLogout} className="logout-button">Выйти</button>
+          <Link to="/" className="back-button">
+            На главную
+          </Link>
+          <button onClick={handleLogout} className="logout-button">
+            Выйти
+          </button>
         </div>
       </div>
 
@@ -78,22 +74,42 @@ export default function Profile() {
             <thead>
               <tr>
                 <th>Дата</th>
-                <th>Тема</th>
+                <th>Id варианта</th>
                 <th>Результат</th>
-                <th>Баллы</th>
+                <th>Правильных ответов</th>
+                <th>Неправильных ответов</th>
+                <th>Всего вопросов</th>
               </tr>
             </thead>
             <tbody>
-              {stats.history.map((item, i) => (
-                <tr key={i}>
-                  <td>{item.date}</td>
-                  <td>{item.theme}</td>
-                  <td className={`result ${item.result === "Правильно" ? "correct" : "incorrect"}`}>
-                    {item.result}
-                  </td>
-                  <td>{item.score}</td>
-                </tr>
-              ))}
+              {stats.history.map(
+                (
+                  {
+                    date,
+                    variantId,
+                    result,
+                    correctAnswersCount,
+                    incorrectAnswersCount,
+                    totalQuestions,
+                  },
+                  i
+                ) => (
+                  <tr key={i}>
+                    <td>{date}</td>
+                    <td>{variantId}</td>
+                    <td
+                      className={`result ${
+                        result === "Правильно" ? "correct" : "incorrect"
+                      }`}
+                    >
+                      {result}
+                    </td>
+                    <td>{correctAnswersCount}</td>
+                    <td>{incorrectAnswersCount}</td>
+                    <td>{totalQuestions}</td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </section>

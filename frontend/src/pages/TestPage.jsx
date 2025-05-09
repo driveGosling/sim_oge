@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Question from "../components/Question";
 import "./TestPage.css";
+import { useAuth } from "../contexts/AuthContext";
 
 const secondsToHMS = (sec) => {
   const dateObj = new Date(sec * 1000);
@@ -20,8 +21,6 @@ const secondsToHMS = (sec) => {
 const Test = ({ variant }) => {
   const { id, questions } = variant;
 
-  console.log(questions);
-
   if (!questions || questions.length === 0) {
     return (
       <main>
@@ -36,6 +35,7 @@ const Test = ({ variant }) => {
     );
   }
 
+  const { user, API, fetchStats } = useAuth();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [answers, setAnswers] = useState({});
   const [secondsLeft, setSecondsLeft] = useState(10800);
@@ -45,9 +45,36 @@ const Test = ({ variant }) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e?.preventDefault();
     setIsSubmitted(true);
+
+    const totalQuestions = questions.length;
+    let correctCount = 0;
+
+    questions.forEach((q) => {
+      const userAnswer = answers[q.id];
+      if (userAnswer === q.correctAnswer) {
+        correctCount++;
+      }
+    });
+
+    const isSuccessful = correctCount >= Math.ceil(totalQuestions / 2);
+
+    const attemptData = {
+      user_id: user?.id,
+      variant_id: id,
+      total_questions: totalQuestions,
+      correct_questions: correctCount,
+      successful: isSuccessful,
+    };
+
+    try {
+      await API.post("/attempts", attemptData);
+      await fetchStats();
+    } catch (error) {
+      console.error("Failed to save attempt:", error);
+    }
   };
 
   useEffect(() => {
@@ -63,10 +90,9 @@ const Test = ({ variant }) => {
 
   return (
     <main>
-      <form className="main-form" onSubmit={handleSubmit}>
-        <h2 className="name-variant">Вариант № {id}</h2>
-
-        {!isSubmitted ? (
+      {!isSubmitted ? (
+        <form className="main-form" onSubmit={handleSubmit}>
+          <h2 className="name-variant">Вариант № {id}</h2>
           <div>
             <p>Осталось: {timeLeft}</p>
             {questions.map((question, index) => (
@@ -80,42 +106,6 @@ const Test = ({ variant }) => {
               />
             ))}
           </div>
-        ) : (
-          <div>
-            <h3>Результаты теста</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>№</th>
-                  <th>Тип</th>
-                  <th>Ваш ответ</th>
-                  <th>Правильный ответ</th>
-                </tr>
-              </thead>
-              <tbody>
-                {questions.map(({ id, answerType, correctAnswer }, index) => (
-                  <tr key={id}>
-                    <td>{index + 1}</td>
-                    <td>{answerType}</td>
-                    <td
-                      className={
-                        answerType === "long"
-                          ? ""
-                          : (answers[id] === correctAnswer && "correct") ||
-                            "wrong"
-                      }
-                    >
-                      {answers[id]}
-                    </td>
-                    <td>{correctAnswer}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {!isSubmitted ? (
           <button
             type="submit"
             disabled={isSubmitted}
@@ -123,14 +113,44 @@ const Test = ({ variant }) => {
           >
             Завершить тест
           </button>
-        ) : (
-          <button className="back-btn">
-            <Link className="link" to="/">
-              Вернуться на главную
-            </Link>
-          </button>
-        )}
-      </form>
+        </form>
+      ) : (
+        <div>
+          <h3>Результаты теста</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Тип</th>
+                <th>Ваш ответ</th>
+                <th>Правильный ответ</th>
+              </tr>
+            </thead>
+            <tbody>
+              {questions.map(({ id, answerType, correctAnswer }, index) => (
+                <tr key={id}>
+                  <td>{index + 1}</td>
+                  <td>{answerType}</td>
+                  <td
+                    className={
+                      answerType === "long"
+                        ? ""
+                        : (answers[id] === correctAnswer && "correct") ||
+                          "wrong"
+                    }
+                  >
+                    {answers[id]}
+                  </td>
+                  <td>{correctAnswer}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Link className="back-btn link" to="/">
+            Вернуться на главную
+          </Link>
+        </div>
+      )}
     </main>
   );
 };
