@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+version: "3.8"
+
+>>>>>>> e9c958e10d3e740441f383396b2cad86c72c6a2e
 services:
   db:
     image: postgres:15-alpine
