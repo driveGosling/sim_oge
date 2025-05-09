@@ -7,6 +7,8 @@ RUN npm ci --production
 
 COPY . .
 
+WORKDIR /usr/src/app/src
+
 EXPOSE 5000
 
-CMD ["npm", "start"]
+CMD ["node", "src/server.js"]
