@@ -193,3 +193,39 @@
   text-decoration: none;
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .section-tren .variants-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .li-test {
+    font-size: 14px;
+    padding: 0.6rem;
+  }
+
+  .descr {
+    padding: 0 1rem;
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .btns-container {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    width: 90%;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .descr-wrapper {
+    margin: 1rem 0;
+  }
+}

@@ -199,3 +199,20 @@
   display: inline-flex;
   margin: 0 auto;
 }
+
+
+@media screen {
+  .auth-buttons {
+    z-index: 2;
+  }
+  
+  .form-login {
+    position: relative;
+    right: 4rem;
+  }
+
+  .form-register {
+    position: relative;
+    right: 4rem;
+  }
+}
