@@ -23,14 +23,12 @@ const Test = ({ variant }) => {
 
   if (!questions || questions.length === 0) {
     return (
-      <main>
+      <main className="no-questions">
         <h2>Вариант № {id}</h2>
-        <p>На данный момент вопросы отсутствуют.</p>
-        <button className="back-btn">
-          <Link className="link" to="/">
+        <p>На данный момент вопросы отсутствуют.</p>      
+          <Link className="back-btn" to="/">
             Вернуться на главную
           </Link>
-        </button>
       </main>
     );
   }
@@ -93,7 +91,7 @@ const Test = ({ variant }) => {
       {!isSubmitted ? (
         <form className="main-form" onSubmit={handleSubmit}>
           <h2 className="name-variant">Вариант № {id}</h2>
-          <div>
+          <div className="questions-container">
             <p>Осталось: {timeLeft}</p>
             {questions.map((question, index) => (
               <Question
@@ -115,7 +113,7 @@ const Test = ({ variant }) => {
           </button>
         </form>
       ) : (
-        <div>
+        <div className="result-container">
           <h3>Результаты теста</h3>
           <table>
             <thead>
@@ -146,7 +144,7 @@ const Test = ({ variant }) => {
               ))}
             </tbody>
           </table>
-          <Link className="back-btn link" to="/">
+          <Link className="back-btn" to="/">
             Вернуться на главную
           </Link>
         </div>

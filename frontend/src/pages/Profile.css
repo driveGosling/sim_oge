@@ -93,15 +93,20 @@
 
 .attempts-table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  table-layout: auto;
 }
 
 .attempts-table th, .attempts-table td {
-  padding: 12px 125px;
+  padding: 12px 16px;
   text-align: center;
   border-bottom: 1px solid #ecf0f1;
+  word-break: break-word;
 }
+
+
 
 .attempts-table th {
   background: #f8f9fa;
@@ -153,3 +158,76 @@
     background-color: #c0392b;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
+
+  @media (max-width: 768px) {
+    /* Контейнер страницы */
+    .profile-page {
+      padding: 20px 1rem;
+    }
+  
+    /* Хедер: колонка и центр */
+    .profile-header {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 20px;
+    }
+  
+    /* Кнопка «Назад» по центру, поменьше */
+    .back-button {
+      display: block;
+      margin: 0 auto;
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  
+    /* Контент внутри */
+    .profile-content {
+      padding: 15px;
+    }
+  
+    /* Пользовательская инфо: уже есть адаптив */
+    /* Аватар чуть меньше */
+    .avatar {
+      width: 60px;
+      height: 60px;
+    }
+    .user-details h2 {
+      font-size: 1.2rem;
+    }
+    .user-details p {
+      font-size: 0.85rem;
+    }
+  
+    /* Сетка статистики — уже одна колонка */
+    .stats-grid {
+      gap: 1rem;
+    }
+    .stat-card {
+      padding: 15px;
+    }
+    .stat-value {
+      font-size: 28px;
+    }
+    .stat-label {
+      font-size: 12px;
+    }
+  
+    /* Таблица попыток: меньше паддинги и шрифт */
+    .attempts-table th,
+    .attempts-table td {
+      padding: 8px 6px;
+      font-size: 12px;
+    }
+  
+    /* Если кнопок логина/логаута несколько */
+    .profile-header .header-buttons {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .logout-button {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  }
+  

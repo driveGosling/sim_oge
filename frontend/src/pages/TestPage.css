@@ -1,3 +1,12 @@
+.no-questions {
+  padding: 30px 6rem;
+}
+.no-questions h2 {
+  position: relative;
+  top: 15px;
+  margin-bottom: 60px;
+}
+
 .main-form {
   padding: 30px 6rem;
 }
@@ -8,6 +17,23 @@
   align-items: center;
   justify-content: center;
 }
+
+.result-container {
+  padding: 30px 6rem;
+}
+
+.result-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+.result-container th,
+.result-container td {
+  padding: 15px 1px;
+}
+
 
 .answer-label {
   margin-right: 0.5rem;
@@ -97,13 +123,17 @@
 table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px;
 }
+
 th,
 td {
   border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+  padding: 6px 8px;
+  text-align: center;
+  line-height: 1.4;
 }
+
 th {
   background-color: #f2f2f2;
 }
@@ -117,13 +147,65 @@ th {
 }
 
 .back-btn {
+  display: inline-block;
   background-color: #fd7811;
   color: #fff;
   font-weight: 300;
   border: none;
-  border-radius: 15px;
-  margin: 1rem auto;
+  margin: 2rem auto 0;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.9rem;
+  margin: 2rem;
+  font-size: 14px;
   text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: #e1690d;
+}
+
+@media (max-width: 768px) {
+  .no-questions,
+  .main-form,
+  .result-container {
+    padding: 20px 1rem;
+  }
+
+  .no-questions h2 {
+    position: static;
+    top: auto;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .answer-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .result-container table {
+    font-size: 12px;
+  }
+  .result-container th,
+  .result-container td {
+    padding: 6px 4px;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+
+  .back-btn {
+    display: block;
+    width: auto;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    margin: 1.5rem auto 0;
+  }
 }

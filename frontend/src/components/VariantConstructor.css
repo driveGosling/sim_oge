@@ -155,3 +155,31 @@
   padding: 0.5rem 0;
   text-align: left;
 }
+@media (max-width: 768px) {
+  .constructor {
+    flex-direction: column;
+  }
+
+  .constructor-topicList {
+    max-width: 100%;
+    padding-right: 0;
+  }
+
+  .constructor-buttons {
+    order: 99;
+    width: 100%;
+    margin-top: 1.5rem;
+    justify-content: center;
+  }
+
+  .constructor-buttons .submit,
+  .button-frame .submit {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+
+  .constructor-body li {
+    padding: 0.5rem 0;
+  }
+}
