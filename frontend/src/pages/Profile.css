@@ -160,12 +160,10 @@
   }
 
   @media (max-width: 768px) {
-    /* Контейнер страницы */
     .profile-page {
       padding: 20px 1rem;
     }
   
-    /* Хедер: колонка и центр */
     .profile-header {
       flex-direction: column;
       align-items: center;
@@ -173,7 +171,6 @@
       margin-bottom: 20px;
     }
   
-    /* Кнопка «Назад» по центру, поменьше */
     .back-button {
       display: block;
       margin: 0 auto;
@@ -181,13 +178,9 @@
       padding: 6px 12px;
     }
   
-    /* Контент внутри */
     .profile-content {
       padding: 15px;
     }
-  
-    /* Пользовательская инфо: уже есть адаптив */
-    /* Аватар чуть меньше */
     .avatar {
       width: 60px;
       height: 60px;
@@ -199,7 +192,6 @@
       font-size: 0.85rem;
     }
   
-    /* Сетка статистики — уже одна колонка */
     .stats-grid {
       gap: 1rem;
     }
@@ -213,14 +205,12 @@
       font-size: 12px;
     }
   
-    /* Таблица попыток: меньше паддинги и шрифт */
     .attempts-table th,
     .attempts-table td {
       padding: 8px 6px;
       font-size: 12px;
     }
   
-    /* Если кнопок логина/логаута несколько */
     .profile-header .header-buttons {
       flex-wrap: wrap;
       justify-content: center;

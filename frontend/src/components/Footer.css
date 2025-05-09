@@ -92,7 +92,6 @@
     text-align: center;
   }
 
-  /* Чтобы ссылки в колонке «Разработка» не растягивались в одну строку */
   .dev-column .footer-list {
     flex-direction: column;
     gap: 0.5rem;
