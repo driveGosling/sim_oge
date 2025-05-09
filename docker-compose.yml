@@ -11,7 +11,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
-      - ${NETWORK}
+      - myapp_network
 
   backend:
     build: ./backend
@@ -28,13 +28,13 @@ services:
     expose:
       - "${BACKEND_PORT}"
     networks:
-      - ${NETWORK}
+      - myapp_network
 
   frontend:
     build: ./frontend
     restart: always
     networks:
-      - ${NETWORK}
+      - myapp_network
 
   nginx:
     image: nginx:stable-alpine
@@ -47,11 +47,11 @@ services:
       - frontend
       - backend
     networks:
-      - ${NETWORK}
+      - myapp_network
 
 volumes:
   db_data:
 
 networks:
-  ${NETWORK}:
+  myapp_network:
     driver: bridge
