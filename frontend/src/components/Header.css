@@ -201,7 +201,7 @@
 }
 
 
-@media screen {
+@media (765px) {
   .auth-buttons {
     z-index: 2;
   }
