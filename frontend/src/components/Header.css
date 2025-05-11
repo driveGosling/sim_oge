@@ -58,6 +58,7 @@
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
+  z-index: 2;
 }
 
 .btn-login {
@@ -201,7 +202,7 @@
 }
 
 
-@media (765px) {
+@media (max-width: 765px) {
   .auth-buttons {
     z-index: 2;
   }
@@ -214,5 +215,11 @@
   .form-register {
     position: relative;
     right: 4rem;
+  }
+  
+  .btn-register {
+  background-color: #ffffff8b;
+  color: #000000;
+  border: 1px solid #fd7811;
   }
 }
