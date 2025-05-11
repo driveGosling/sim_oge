@@ -20,6 +20,7 @@ services:
     env_file:
       - .env
     environment:
+      - PORT=${BACKEND_PORT}
       - DATABASE_HOST
       - DATABASE_PORT
       - DATABASE_USER
