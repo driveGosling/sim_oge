@@ -30,7 +30,7 @@ const VariantConstructor = () => {
 
     const fetchTopics = async () => {
       try {
-        const resp = await fetch("http://localhost:5000/api/topics");
+        const resp = await fetch("/api/topics");
         if (!resp.ok) throw new Error();
         const apiTopics = await resp.json();
         // const all = dedupe([...apiTopics, ...extraTopics]);
@@ -48,7 +48,7 @@ const VariantConstructor = () => {
 
     const fetchQuestions = async () => {
       try {
-        const resp = await fetch("http://localhost:5000/api/questions");
+        const resp = await fetch("/api/questions");
         if (!resp.ok) throw new Error();
         setQuestions(await resp.json());
       } catch {
