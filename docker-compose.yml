@@ -13,25 +13,25 @@ services:
       - ./db/initdb:/docker-entrypoint-initdb.d:ro
     networks:
       - myapp_network
-
   backend:
     build: ./backend
     restart: always
     env_file:
       - .env
     environment:
-      - PORT=${BACKEND_PORT}
-      - DATABASE_HOST
-      - DATABASE_PORT
-      - DATABASE_USER
-      - DATABASE_PASSWORD
-      - DATABASE_NAME
-    depends_on:
-      - db
+      DATABASE_HOST: "${DATABASE_HOST}"
+      DATABASE_PORT: "${DATABASE_PORT}"
+      DATABASE_USER: "${DATABASE_USER}"
+      DATABASE_PASSWORD: "${DATABASE_PASSWORD}"
+      DATABASE_NAME: "${DATABASE_NAME}"
+      PORT: "${BACKEND_PORT}"
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
+    depends_on:
+      - db
     networks:
       - myapp_network
+
 
   frontend:
     build: ./frontend
