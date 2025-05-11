@@ -28,8 +28,6 @@ services:
       - DATABASE_NAME
     depends_on:
       - db
-    expose:
-      - "${BACKEND_PORT}"
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     networks:
