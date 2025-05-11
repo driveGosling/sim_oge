@@ -25,6 +25,8 @@ services:
       - DB_USER=${DATABASE_USER}
       - DB_PASSWORD=${DATABASE_PASSWORD}
       - DB_NAME=${DATABASE_NAME}
+    depends_on:
+      - db
     expose:
       - "${BACKEND_PORT}"
     networks:
@@ -33,6 +35,8 @@ services:
   frontend:
     build: ./frontend
     restart: always
+    depends_on:
+      - backend
     networks:
       - myapp_network
 
