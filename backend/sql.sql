@@ -44,9 +44,9 @@ CREATE TABLE
 --     RETURN NEW;
 -- END;
 -- $$ LANGUAGE plpgsql;
-CREATE TRIGGER check_question_type BEFORE INSERT
-OR
-UPDATE ON Questions FOR EACH ROW EXECUTE FUNCTION validate_question_type ();
+-- CREATE TRIGGER check_question_type BEFORE INSERT
+-- OR
+-- UPDATE ON Questions FOR EACH ROW EXECUTE FUNCTION validate_question_type ();
 
 INSERT INTO
     Topics (name, questions_type)
