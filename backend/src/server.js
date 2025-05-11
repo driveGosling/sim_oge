@@ -23,6 +23,11 @@ app.get("/api/health", async (_, res) => {
 
 app.use("/api", apiRouter);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: err.message });
+});
+
 app.listen(port, () => {
   console.log(`Backend listening on port ${port}`);
 });
