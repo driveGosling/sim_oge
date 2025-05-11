@@ -50,14 +50,19 @@
 }
 
 .textarea-style {
+  width: 100%;            /* занять всю ширину контейнера */
+  max-width: 100%;        /* не вылезать за пределы */
+  min-height: 150px;      /* минимум по высоте */
+  height: 200px;          /* базовая высота */
+  max-height: 300px;      /* максимум по высоте */
+  box-sizing: border-box; /* включаем padding/border в расчёт размеров */
   border-radius: 5px;
   border: 1px solid #ccc;
-  width: 700px;
-  height: 200px;
-  max-height: 300px;
   resize: vertical;
   overflow-y: auto;
 }
+
+
 
 .textarea-style:focus {
   border-color: #fd7811;
@@ -70,4 +75,11 @@
   color: #666;
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
+}
+
+@media (max-width: 756px) {
+  .textarea-style {
+    height: 150px;
+    font-size: 0.9rem;
+  }
 }
