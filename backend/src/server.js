@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const apiRouter = require("./routes");
+const { Pool }  = require("pg");
 
 const app = express();
 const port = process.env.PORT || 5000;
