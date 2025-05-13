@@ -25,10 +25,10 @@ const Test = ({ variant }) => {
     return (
       <main className="no-questions">
         <h2>Вариант № {id}</h2>
-        <p>На данный момент вопросы отсутствуют.</p>      
-          <Link className="back-btn" to="/">
-            Вернуться на главную
-          </Link>
+        <p>На данный момент вопросы отсутствуют.</p>
+        <Link className="back-btn" to="/">
+          Вернуться на главную
+        </Link>
       </main>
     );
   }
@@ -46,6 +46,8 @@ const Test = ({ variant }) => {
   const handleSubmit = async (e) => {
     e?.preventDefault();
     setIsSubmitted(true);
+
+    if (!id) return; // Если вариант кастомный - статистика не сохраняется
 
     const totalQuestions = questions.length;
     let correctCount = 0;
@@ -90,7 +92,12 @@ const Test = ({ variant }) => {
     <main>
       {!isSubmitted ? (
         <form className="main-form" onSubmit={handleSubmit}>
-          <h2 className="name-variant">Вариант № {id}</h2>
+          {id ? (
+            <h2 className="name-variant">Вариант № {id}</h2>
+          ) : (
+            <h2 className="name-variant">Свой вариант</h2>
+          )}
+
           <div className="questions-container">
             <p>Осталось: {timeLeft}</p>
             {questions.map((question, index) => (
