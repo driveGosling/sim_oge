@@ -129,8 +129,6 @@ const VariantConstructor = () => {
 
     if (selectedQuestions.length) {
       await handleCustomVariant({
-        id: Date.now(),
-        name: `Вариант ${new Date().toLocaleTimeString()}`,
         questions: selectedQuestions,
       });
       navigate("/test/custom");
